@@ -82,7 +82,6 @@ namespace gzzopts {
             private:
                 using value_type = bool;
                 bool* var = nullptr;
-                //bool is_set = false;
             public:
                 Var(bool &v) : var(&v) { };
                 virtual bool set_value(const std::string& val){
@@ -104,7 +103,6 @@ namespace gzzopts {
             private:
                 using value_type = std::list<T>;
                 value_type* var = nullptr;
-                //bool is_set = false;
             public:
                 Var(value_type &v) : var(&v) { };
                 virtual bool set_value(const std::string& val){
@@ -129,7 +127,6 @@ namespace gzzopts {
             private:
                 using value_type = std::vector<T>;
                 value_type* var = nullptr;
-               //bool is_set = false;
             public:
                 Var(value_type &v) : var(&v) { };
                 virtual bool set_value(const std::string& val){
@@ -396,15 +393,19 @@ namespace gzzopts {
                 //
             };
             bool parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner);
+        protected:
             bool inner_parse(OptionParser* op, std::string progname, char o, std::vector<std::string> args, std::vector<std::string>::size_type& i);
+        public:
             bool usage(std::string progname) const;
             bool discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc, const bool compact) const;
+        protected:
             bool findit(str_pair_vec out, std::string opt_spec, std::string opt_desc) const;
     }; // class Opts //
     extern bool USAGE(const std::string& progname, const Opts opts);
     extern bool DISCRIBEUSAGE(const Opts opts, const bool seg_desc, const bool compact);
     class OptionParser {
         private:
+            friend class Opts;
             std::string progname;
             std::vector<std::string> args;
             Opts opts;
@@ -436,6 +437,7 @@ namespace gzzopts {
             void set_discribeusage(function_void f) { _discribeusage = f; };
             const bool segment_discription() const { return _segment_discription; };
             void set_segment_discription(bool seg_desc) { _segment_discription = seg_desc; };
+        private:
             void set_bad_opt_lst(std::string opt_name, bool result){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\topt_name == " << opt_name << "\tresult == " << std::boolalpha << result << "\t_stored_result == " << _stored_result << std::endl;
                 if(!result) _bad_opt_lst.push_back(opt_name);
@@ -446,6 +448,7 @@ namespace gzzopts {
             void set_stored_result(bool result) { _stored_result = _stored_result && result; };
             const Opts* winner() const { return _winner; };
             void set_winner(Opts* o) { _winner = o; };
+        public:
             const bool compact() const { return _compact; };
             void set_compact(bool comp) { _compact = comp; };
     }; // class OptionParser //
