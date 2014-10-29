@@ -7,22 +7,22 @@ The library (not a lib yet) is contained in the files *gzzopt.hpp* and *gzzopt.c
 that *example0* tries to have the command line:
 <pre>
 ...
-./example0 install <pacakage>...
-./example0 install info <pacakage>...
+./example0 install &lt;pacakage&gt;...
+./example0 install info &lt;pacakage&gt;...
 </pre>
 
 the problem is *install* shadows *info* and info is treated as a package argument where as *example* uses: 
 <pre>
 ...
-./example install <pacakage>...
-./example info <pacakage>...
+./example install &lt;pacakage&gt;...
+./example info &lt;pacakage&gt;...
 </pre>
 
 this works fine try each *calc* and *calc2* are the same except for how there arguments are specified, to wit:
 <pre>
 21:26:00 grizzlysmit@rakbat:~/Projects/C++/gzzoption$ ./calc --help
 ./calc --help|-h
-./calc [--help|-h] [--verbose|-v] [--quiet|-q] add|sub|mult|div|pow <x> <y>
+./calc [--help|-h] [--verbose|-v] [--quiet|-q] add|sub|mult|div|pow &lt;x&gt; &lt;y&gt;
 
 
 where:
@@ -32,17 +32,17 @@ where:
 	[--verbose|-v]       : proceed verbosely
 	[--quiet|-q]         : proceed quietly
 	add|sub|mult|div|pow : apply op to x and y
-	<x>                  : a double value
-	<y>                  : a double value
+	&lt;x&gt;                  : a double value
+	&lt;y&gt;                  : a double value
 	                       
 
 21:29:41 grizzlysmit@rakbat:~/Projects/C++/gzzoption$ ./calc2 --help
 ./calc2 [--help|-h]
-./calc2 [--verbose|-v] [--quiet|-q] add <x> <y>
-./calc2 [--verbose|-v] [--quiet|-q] sub <x> <y>
-./calc2 [--verbose|-v] [--quiet|-q] mult <x> <y>
-./calc2 [--verbose|-v] [--quiet|-q] div <x> <y>
-./calc2 [--verbose|-v] [--quiet|-q] pow <x> <y>
+./calc2 [--verbose|-v] [--quiet|-q] add &lt;x&gt; &lt;y&gt;
+./calc2 [--verbose|-v] [--quiet|-q] sub &lt;x&gt; &lt;y&gt;
+./calc2 [--verbose|-v] [--quiet|-q] mult &lt;x&gt; &lt;y&gt;
+./calc2 [--verbose|-v] [--quiet|-q] div &lt;x&gt; &lt;y&gt;
+./calc2 [--verbose|-v] [--quiet|-q] pow &lt;x&gt; &lt;y&gt;
 
 
 where:
@@ -51,8 +51,8 @@ where:
 	[--verbose|-v] : proceed verbosely
 	[--quiet|-q]   : proceed quietly
 	add            : apply op to x and y
-	<x>            : a double value
-	<y>            : a double value
+	&lt;x&gt;            : a double value
+	&lt;y&gt;            : a double value
 	                 
 	sub            : apply op to x and y
 	                 
