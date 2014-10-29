@@ -181,6 +181,9 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                         if(var->set_value(args[i])){
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tspecs[current].long_opt() == " << specs[current].long_opt() << std::endl;
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tspecs[current].cut() == " << std::boolalpha << specs[current].cut() << std::endl;
+                            if(specs[current].no_more_opts()){
+                                no_more_opts = true;
+                            }
                             if(specs[current].cut()){
                                 op->set_winner(this);
                             }
@@ -201,6 +204,9 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     basic_var* var = specs[current].get_var();
                     if(var->set_value(args[i])){
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
+                        if(specs[current].no_more_opts()){
+                            no_more_opts = true;
+                        }
                         if(specs[current].cut()){
                             op->set_winner(this);
                         }
@@ -311,6 +317,9 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                         if(var->set_value(value)){
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                             res = true;
+                            if(specs[j].no_more_opts()){
+                                no_more_opts = true;
+                            }
                             if(specs[j].cut()){
                                 op->set_winner(this);
                             }
@@ -387,6 +396,9 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                             if(var->set_value(value)){
                                 res = true;
                                 finished = true;
+                                if(specs[j].no_more_opts()){
+                                    no_more_opts = true;
+                                }
                                 if(specs[j].cut()){
                                     op->set_winner(this);
                                 }

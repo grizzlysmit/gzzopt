@@ -211,10 +211,12 @@ namespace gzzopts {
             bool        _positional = false;
             bool        _literal = false;
             bool        _cut = false;
+            bool        _no_more_opts = false;
             std::vector<Opts*> _rest;
         public:
             OptionSpec(OptionSpec&& other)
-                : _description(other._description), _long(other._long), _short(other._short), _expects_arg(other._expects_arg), _multi(other._multi), _manditory(other._manditory), _integer(other._integer), _positional(other._positional), _literal(other._literal), _cut(other._cut)
+                : _description(other._description), _long(other._long), _short(other._short), _expects_arg(other._expects_arg), _multi(other._multi), _manditory(other._manditory),
+                        _integer(other._integer), _positional(other._positional), _literal(other._literal), _cut(other._cut), _no_more_opts(other._no_more_opts)
             {
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here: var == " << var << " other.var == " << other.var << " _long == " << _long << std::endl;
                 std::swap(var, other.var);
@@ -233,7 +235,7 @@ namespace gzzopts {
             };
             OptionSpec(const OptionSpec& other)
                 : var(other.var->copy()), _description(other._description), _long(other._long), _short(other._short), _expects_arg(other._expects_arg), _multi(other._multi), _manditory(other._manditory),
-                _integer(other._integer), _positional(other._positional), _literal(other._literal), _cut(other._cut), _rest(other._rest) {
+                _integer(other._integer), _positional(other._positional), _literal(other._literal), _cut(other._cut), _no_more_opts(other._no_more_opts), _rest(other._rest) {
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here: var == " << var << " other.var == " << other.var << " _long == " << _long << std::endl;
             };
             OptionSpec& operator=(OptionSpec&& rhs){
@@ -259,56 +261,57 @@ namespace gzzopts {
                 }
                 std::swap(_literal, rhs._literal);
                 std::swap(_cut, rhs._cut);
+                std::swap(_no_more_opts, rhs._no_more_opts);
                 return *this;
             };
             template<class T>
                 OptionSpec(T& v, const std::string desc, const std::string long_opt, const char short_opt = '\0', bool multi = false, bool manditory = false, bool integer = false, bool positional = false)
-                  : var(new Var<T>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(integer), _positional(positional), _literal(false), _cut(false) {
+                  : var(new Var<T>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(integer), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                     //
                 };
             template<class T>
                 OptionSpec(T& v, const char* desc, const char* long_opt, const char short_opt = '\0', bool multi = false, bool manditory = false, bool integer = false, bool positional = false)
-                  : var(new Var<T>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(integer), _positional(positional), _literal(false), _cut(false) {
+                  : var(new Var<T>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(integer), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                     //
                 };
             OptionSpec(bool& v, const char* desc, const char* long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
-              : var(new Var<bool>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(false), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false) {
+              : var(new Var<bool>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(false), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
             };
             OptionSpec(bool& v, const std::string desc, const std::string long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
-              : var(new Var<bool>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(false), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false) {
+              : var(new Var<bool>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(false), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
             };
             template<class T>
                 OptionSpec(std::list<T>& v, const char* desc, const char* long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
-                  : var(new Var<std::list<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false) {
+                  : var(new Var<std::list<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 };
             template<class T>
                 OptionSpec(std::list<T>& v, const std::string desc, const std::string long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
-                  : var(new Var<std::list<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false) {
+                  : var(new Var<std::list<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 };
             template<class T>
                 OptionSpec(std::vector<T>& v, const char* desc, const char* long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
-                  : var(new Var<std::vector<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false) {
+                  : var(new Var<std::vector<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 };
             template<class T>
                 OptionSpec(std::vector<T>& v, const std::string desc, const std::string long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
-                  : var(new Var<std::vector<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false) {
+                  : var(new Var<std::vector<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 };
             OptionSpec(function_void f, const char* desc, const char* long_opt, const char short_opt = '\0', bool multi = false, bool manditory = false)
-              : var(new Func0(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false) {
+              : var(new Func0(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
                 //
             };
             OptionSpec(function_void f, const std::string desc, const std::string long_opt, const char short_opt = '\0', bool multi = false, bool manditory = false)
-              : var(new Func0(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false) {
+              : var(new Func0(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
                 //
             };
             OptionSpec(function_str f, const char* desc, const char* long_opt, const char short_opt = '\0', bool multi = false, bool manditory = false)
-              : var(new Func(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false) {
+              : var(new Func(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
                 //
             };
             OptionSpec(function_str f, const std::string desc, const std::string long_opt, const char short_opt = '\0', bool multi = false, bool manditory = false)
-              : var(new Func(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false) {
+              : var(new Func(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
                 //
             };
             OptionSpec(std::initializer_list<Opts*> opts) : var(new NullVar)/*, _rest(opts)*/ {
@@ -347,6 +350,8 @@ namespace gzzopts {
             OptionSpec& set_literal(bool lit) { _literal = lit; return *this; };
             const bool cut() const { return _cut; };
             OptionSpec& set_cut(bool ct) { _cut = ct; return *this; };
+            const bool no_more_opts() const { return _no_more_opts; };
+            OptionSpec& set_no_more_opts(bool nomoreopts) { _no_more_opts = nomoreopts; return *this; };
             const std::vector<Opts*>& rest() const {
                 return _rest;
             };

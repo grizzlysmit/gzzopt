@@ -110,17 +110,17 @@ int main(int argc, char *argv[]){
     std::list<std::string> l;
     std::vector<double> v;
     function_str verb = [&quiet](const std::string& val) -> bool { quiet = false; return !quiet; };
-    Opts opt2{literal([&opp2](const std::string& n) -> bool { return set_opp2(opp2, n); }, "echo or ls all args", "echo|ls"),
+    Opts opt2{literal([&opp2](const std::string& n) -> bool { return set_opp2(opp2, n); }, "echo or ls all args", "echo|ls").set_no_more_opts(true),
               positional(l, "a list of strings", "l"),
                 };
     Opts opt3{literal([&lst]() -> bool { return lst = true; }, "list all args", "list"),
               positional(v, "a list of doubles", "v").set_manditory(true),
                 };
-    Opts opt5{literal(info, "get install info", "info"),
+    Opts opt5{literal(info, "get install info", "info").set_no_more_opts(true),
               positional(l, "a list of packages to get info on", "pacakage").set_manditory(true),
                 };
     Opts opt4{OptionSpec{&opt5, },
-              literal(install, "install somestuff", "install"),
+              literal(install, "install somestuff", "install").set_no_more_opts(true),
               positional(l, "a list of packages to install", "pacakage").set_manditory(true),
                 };
     Opts opt1{ OptionSpec(file, "File", "file", 'f').set_expects_arg(true), 
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
                       positional([&opp]() -> bool { opp = Opp::div;  return true; }, "add x and y", "div"),
                       positional([&opp]() -> bool { opp = Opp::pow;  return true; }, "add x and y", "pow"),
                       // */
-                      literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "add|sub|mult|div|pow"),
+                      literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "add|sub|mult|div|pow").set_no_more_opts(true),
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
