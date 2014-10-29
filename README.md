@@ -3,7 +3,7 @@ This is the start of the gzzopt option parsing library
 
 ##Author: Francis Grizzly Smit##
 
-The library (not a lib yet) is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 4 exaple programs *calc, calc2, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotta is 
+The library (not a lib yet) is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 4 example programs *calc, calc2, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotta is 
 that *example0* tries to have the command line:
 <pre>
 ...
@@ -64,7 +64,7 @@ where:
 	                 
 </pre>
 
-As you can see *calc* uses one arg spec *add|sub|mult|div|pow* where as *calc2* does the same thing using one command line per *add*, through to *pow*, as a result I used *p.set_compact(true);* in *calc2.cpp*.
-All of the programs corresponds to a .cpp file see the *Makefile* for details.
+As you can see *calc* uses one argument spec *add|sub|mult|div|pow* where as *calc2* does the same thing using one command line per *add*, through to *pow*, as a result I used *p.set_compact(true);* to avoid duplicate lines in the usage message; in *calc2.cpp*.
+All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 
 
