@@ -436,7 +436,7 @@ namespace gzzopts {
             void set_segment_discription(bool seg_desc) { _segment_discription = seg_desc; };
             void set_bad_opt_lst(std::string opt_name, bool result){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\topt_name == " << opt_name << "\tresult == " << std::boolalpha << result << "\t_stored_result == " << _stored_result << std::endl;
-                _bad_opt_lst.push_back(opt_name);
+                if(!result) _bad_opt_lst.push_back(opt_name);
                 _stored_result = _stored_result && result;
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\topt_name == " << opt_name << "\tresult == " << std::boolalpha << result << "\t_stored_result == " << _stored_result << std::endl;
             };

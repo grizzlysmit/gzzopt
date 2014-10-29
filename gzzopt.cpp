@@ -430,6 +430,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                         finished = false; // for next time //
                         //if(i + 1 >= args.size()) return res;
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == -" << o << std::endl;
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tres == " << std::boolalpha << res << std::endl;
                         op->set_stored_result(res);
                         continue;
                     }
@@ -455,7 +456,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                         op->set_bad_opt_lst("-"s + o, res);
                     }
                 }
-                if(inner) return res;
+                //if(inner) return res;
             }else{
                 std::cerr << "error: never should have got here faulty algorithm " << args[i] << " doe not start with - or -- bailing" << std::endl;
                 return false;
