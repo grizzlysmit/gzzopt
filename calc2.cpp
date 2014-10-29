@@ -112,6 +112,7 @@ int main(int argc, char *argv[]){
     }
     if(help){
         p.fullusage();
+        return 0;
     }
     //std::cout << "quiet == " << std::boolalpha << quiet << std::endl;
     //std::cout << "opp == " << std::boolalpha << to_str(opp) << std::endl;
