@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
     using namespace gzzopts;
     double x, y;
     Opp opp = Opp::none;
-    bool quiet = false, help = false;
+    bool quiet = true, help = false;
     function_str verb = [&quiet](const std::string& val) -> bool { quiet = false; return !quiet; };
     Opts opt1{OptionSpec(help, "show this help", "help", 'h'),
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
     //*
     Opts opt{
                       OptionSpec{&opt1, },
-                      OptionSpec(help, "show this help", "help", 'h'),
+                      OptionSpec(help, "show this help", "help", 'h').set_manditory(true).set_cut(true),
            };
     //*/
 
@@ -84,24 +84,30 @@ int main(int argc, char *argv[]){
     }
     if(help){
         p.fullusage();
+        return 0;
     }
     switch(opp){
         case(Opp::none):
             std::cout << "nothing to do" << std::endl;
             break;
         case(Opp::add):
+            if(!quiet) std::cout << x << " + " << y << " == ";
             std::cout << (x + y) << std::endl;
             break;
         case(Opp::sub):
+            if(!quiet) std::cout << x << " - " << y << " == ";
             std::cout << (x - y) << std::endl;
             break;
         case(Opp::mult):
+            if(!quiet) std::cout << x << " * " << y << " == ";
             std::cout << (x * y) << std::endl;
             break;
         case(Opp::div):
+            if(!quiet) std::cout << x << " / " << y << " == ";
             std::cout << (x / y) << std::endl;
             break;
         case(Opp::pow):
+            if(!quiet) std::cout << x << "^" << y << " == ";
             std::cout << std::pow(x, y) << std::endl;
             break;
         default:
