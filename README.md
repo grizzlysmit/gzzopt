@@ -93,8 +93,10 @@ int main(int argc, char \*argv[]){
     function_str verb = [&quiet](const std::string& val) -> bool { quiet = false; return !quiet; };
     Opts opt1{OptionSpec(help, "show this help", "help", 'h'),
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
-                      OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
-                      literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "add|sub|mult|div|pow").set_no_more_opts(true),
+                      OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; },
+                                                                   "proceed quietly", "quiet", 'q' ), 
+                      literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); },
+                                   "apply op to x and y", "add|sub|mult|div|pow").set_no_more_opts(true),
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
