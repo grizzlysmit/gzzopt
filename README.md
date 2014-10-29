@@ -18,7 +18,7 @@ the problem is *install* shadows *info* and info is treated as a package argumen
 ./example info &lt;pacakage&gt;...
 </pre>
 
-this works fine try each *calc* and *calc2* are the same except for how there arguments are specified, to wit:
+This works fine; try each *calc* and *calc2* are the same except for how there arguments are specified, to wit:
 <pre>
 21:26:00 grizzlysmit@rakbat:~/Projects/C++/gzzoption$ ./calc --help
 ./calc --help|-h
@@ -162,3 +162,6 @@ int main(int argc, char \*argv[]){
 
 *calc.cpp* and *calc2.cpp* for a full example; and *example.cpp* for an example of how convoluted you can get. And *example0.cpp* for an example of a flawed spec reread above for why it's flawed.
 
+
+######NB######
+This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.
