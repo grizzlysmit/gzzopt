@@ -154,6 +154,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     if(result2.empty()){
                         // no match to expected literal //
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+                        res = false;
                         for(auto p : backtrace){
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                             std::vector<std::string>::size_type j;
@@ -174,7 +175,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                                 break;
                             }
                         }
-                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tres == " << std::boolalpha << res << std::endl;
                         return res;
                     }else{
                         basic_var* var = specs[current].get_var();
@@ -311,16 +312,18 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                                 }
                             }
                         }
-                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tvalue == " << value << std::endl;
                         basic_var* var = specs[j].get_var();
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << std::endl;
                         if(var->set_value(value)){
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                             res = true;
                             if(specs[j].no_more_opts()){
+                                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                                 no_more_opts = true;
                             }
                             if(specs[j].cut()){
+                                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                                 op->set_winner(this);
                             }
                         }else{
@@ -337,10 +340,16 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                         break;
                     }
                 }
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                 if(finished){
+                    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tres == " << std::boolalpha << res << std::endl;
                     finished = false; // for next time //
-                    if(i + 1 >= args.size()) return res;
+                    if(i + 1 >= args.size()){
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+                        return res;
+                    }
                     op->set_stored_result(res);
+                    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                     continue;
                 }
                 for(auto p : backtrace){

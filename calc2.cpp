@@ -63,35 +63,35 @@ int main(int argc, char *argv[]){
     Opp opp = Opp::none;
     bool quiet = true, help = false;
     function_str verb = [&quiet](const std::string& val) -> bool { quiet = false; return !quiet; };
-    Opts opt1{OptionSpec(help, "show this help", "help", 'h'),
+    Opts opt1{
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
                       OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
                       literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "add").set_no_more_opts(true),
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
-    Opts opt2{OptionSpec(help, "show this help", "help", 'h'),
+    Opts opt2{
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
                       OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
                       literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "sub").set_no_more_opts(true),
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
-    Opts opt3{OptionSpec(help, "show this help", "help", 'h'),
+    Opts opt3{
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
                       OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
                       literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "mult").set_no_more_opts(true),
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
-    Opts opt4{OptionSpec(help, "show this help", "help", 'h'),
+    Opts opt4{
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
                       OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
                       literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "div").set_no_more_opts(true),
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
-    Opts opt5{OptionSpec(help, "show this help", "help", 'h'),
+    Opts opt5{
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
                       OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
                       literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "pow").set_no_more_opts(true),
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]){
     //*
     Opts opt{
                       OptionSpec{&opt1, &opt2, &opt3, &opt4, &opt5, },
-                      OptionSpec(help, "show this help", "help", 'h').set_manditory(true).set_cut(true),
+                      OptionSpec(help, "show this help", "help", 'h'),
            };
     //*/
 
@@ -113,6 +113,10 @@ int main(int argc, char *argv[]){
     if(help){
         p.fullusage();
     }
+    //std::cout << "quiet == " << std::boolalpha << quiet << std::endl;
+    //std::cout << "opp == " << std::boolalpha << to_str(opp) << std::endl;
+    //std::cout << "x == " << std::boolalpha << x << std::endl;
+    //std::cout << "y == " << std::boolalpha << y << std::endl;
     switch(opp){
         case(Opp::none):
             std::cout << "nothing to do" << std::endl;
