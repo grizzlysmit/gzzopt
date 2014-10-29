@@ -84,27 +84,9 @@ Then when you have combined all this into one Opt object see *calc.cpp* and *cal
 
 enum class Opp  { none, add, sub, mult, div, pow };
 
-bool set_opp(Opp &opp, const std::string value){
-    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tvalue == " << value << "\t__func__ == " << __func__ << std::endl;
-    if(value == "add"){
-        opp = Opp::add;
-    }else if(value == "sub"){
-        opp = Opp::sub;
-    }else if(value == "mult"){
-        opp = Opp::mult;
-    }else if(value == "div"){
-        opp = Opp::div;
-    }else if(value == "pow"){
-        opp = Opp::pow;
-    }else{
-        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
-        return false;
-    }
-    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
-    return true;
-}
+...
 
-int main(int argc, char *argv[]){
+int main(int argc, char \*argv[]){
     using namespace gzzopts;
     double x, y;
     Opp opp = Opp::none;
