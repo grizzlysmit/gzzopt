@@ -106,6 +106,7 @@ int main(int argc, char *argv[]){
     //*/
 
     OptionParser p(argc, argv, opt);
+    p.set_compact(true);
     if(!p.parse()){
         p.fullusage();
         return 1;

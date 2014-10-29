@@ -607,14 +607,15 @@ bool gzzopts::USAGE(const std::string& progname, const Opts opts){
     return opts.usage(progname);
 }
 
-bool gzzopts::DISCRIBEUSAGE(const Opts opts, const bool seg_desc){
+bool gzzopts::DISCRIBEUSAGE(const Opts opts, const bool seg_desc, const bool compact){
+    using namespace std;
     str_pair_vec out;
     std::string::size_type width = 1;
-    opts.discribeusage(out, width, seg_desc);
+    opts.discribeusage(out, width, seg_desc, compact);
     for(auto p : out){
         std::string opt_spec, desc;
         std::tie(opt_spec, desc) = p;
-        std::cerr << "\t" << std::setw(width) << std::left << opt_spec << " : " << std::setw(0) << desc << "\n";
+        std::cerr << "\t" << std::setw(width) << std::left << opt_spec << ((opt_spec == ""s && desc == ""s)?"   " : " : ") << std::setw(0) << desc << "\n";
     }
     std::cerr << std::endl;
     return true;
@@ -684,7 +685,18 @@ bool gzzopts::OptionParser::discribeusage(){
     return _discribeusage();
 }
 
-bool gzzopts::Opts::discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc) const {
+bool gzzopts::Opts::findit(str_pair_vec out, std::string opt_spec, std::string opt_desc) const {
+    for(auto p : out){
+        std::string spec, desc;
+        std::tie(spec, desc) = p;
+        if(spec == opt_spec && desc == opt_desc){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool gzzopts::Opts::discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc, const bool compact) const {
     using namespace std;
     std::vector<std::vector<OptionSpec>::size_type> backtrace;
     for(std::vector<OptionSpec>::size_type i = 0; i < specs.size(); i++){
@@ -725,14 +737,20 @@ bool gzzopts::Opts::discribeusage(str_pair_vec& out, std::string::size_type &wid
         if(specs[i].multi()) opt_spec += "..."s;
         width = std::max(width, opt_spec.length());
         opt_desc = specs[i].description();
-        out.push_back(std::make_tuple(opt_spec, opt_desc));
+        if(compact){
+            if(!findit(out, opt_spec, opt_desc)){
+                out.push_back(std::make_tuple(opt_spec, opt_desc));
+            }
+        }else{
+            out.push_back(std::make_tuple(opt_spec, opt_desc));
+        }
     } // for(std::vector<OptionSpec>::size_type i = 0; i < specs.size(); i++) //
     if(seg_desc) out.push_back(std::make_tuple(""s, ""s));
     if(backtrace.size() > 0){
         for(auto i : backtrace){
             //std::cout << uptillnow << "\t" << i << std::endl;
             for(Opts* o : specs[i].rest()){
-                o->discribeusage(out, width, seg_desc);
+                o->discribeusage(out, width, seg_desc, compact);
             }
         }
     }

@@ -18,7 +18,7 @@ calc: gzzopt.o calc.o
 calc2: gzzopt.o calc2.o
 	$(CC) gzzopt.o calc2.o -o calc2
 
-gzzopt.o: gzzopt.cpp
+gzzopt.o: gzzopt.cpp gzzopt.hpp
 	$(CC) $(CFLAGS) gzzopt.cpp
 
 example.o: example.cpp

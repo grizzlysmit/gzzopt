@@ -398,10 +398,11 @@ namespace gzzopts {
             bool parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner);
             bool inner_parse(OptionParser* op, std::string progname, char o, std::vector<std::string> args, std::vector<std::string>::size_type& i);
             bool usage(std::string progname) const;
-            bool discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc) const;
+            bool discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc, const bool compact) const;
+            bool findit(str_pair_vec out, std::string opt_spec, std::string opt_desc) const;
     }; // class Opts //
     extern bool USAGE(const std::string& progname, const Opts opts);
-    extern bool DISCRIBEUSAGE(const Opts opts, const bool seg_desc);
+    extern bool DISCRIBEUSAGE(const Opts opts, const bool seg_desc, const bool compact);
     class OptionParser {
         private:
             std::string progname;
@@ -410,10 +411,11 @@ namespace gzzopts {
             std::vector<std::string> _bad_opt_lst;
             bool _stored_result = true;
             function_str  _usage         = [this](const std::string& progname) -> bool { return USAGE(progname, this->opts); };
-            function_void _discribeusage = [this]()                            -> bool { return DISCRIBEUSAGE(this->opts, this->_segment_discription); };
+            function_void _discribeusage = [this]()                            -> bool { return DISCRIBEUSAGE(this->opts, this->_segment_discription, this->_compact); };
             function_void _where         = []()                                -> bool { std::cerr << "\n\nwhere:" << std::endl; return std::cerr.good(); };
             function_str  _fullusage     = [this](const std::string& progname) -> bool { return _usage(progname) && _where() &&  _discribeusage(); };
             bool _segment_discription    = true;
+            bool _compact    = false;
             Opts* _winner = nullptr;
         public:
             OptionParser(OptionSpec&&) = delete;
@@ -444,5 +446,7 @@ namespace gzzopts {
             void set_stored_result(bool result) { _stored_result = _stored_result && result; };
             const Opts* winner() const { return _winner; };
             void set_winner(Opts* o) { _winner = o; };
+            const bool compact() const { return _compact; };
+            void set_compact(bool comp) { _compact = comp; };
     }; // class OptionParser //
 } // namespace gzzopts //
