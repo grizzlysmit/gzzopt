@@ -118,30 +118,30 @@ int main(int argc, char \*argv[]){
     }
     switch(opp){
         case(Opp::none):
-            std::cout << "nothing to do" << std::endl;
+            std::cout &lt;&lt; "nothing to do" &lt;&lt; std::endl;
             break;
         case(Opp::add):
-            if(!quiet) std::cout << x << " + " << y << " == ";
-            std::cout << (x + y) << std::endl;
+            if(!quiet) std::cout &lt;&lt; x &lt;&lt; " + " &lt;&lt; y &lt;&lt; " == ";
+            std::cout &lt;&lt; (x + y) &lt;&lt; std::endl;
             break;
         case(Opp::sub):
-            if(!quiet) std::cout << x << " - " << y << " == ";
-            std::cout << (x - y) << std::endl;
+            if(!quiet) std::cout &lt;&lt; x &lt;&lt; " - " &lt;&lt; y &lt;&lt; " == ";
+            std::cout &lt;&lt; (x - y) &lt;&lt; std::endl;
             break;
         case(Opp::mult):
-            if(!quiet) std::cout << x << " * " << y << " == ";
-            std::cout << (x * y) << std::endl;
+            if(!quiet) std::cout &lt;&lt; x &lt;&lt; " * " &lt;&lt; y &lt;&lt; " == ";
+            std::cout &lt;&lt; (x * y) &lt;&lt; std::endl;
             break;
         case(Opp::div):
-            if(!quiet) std::cout << x << " / " << y << " == ";
-            std::cout << (x / y) << std::endl;
+            if(!quiet) std::cout &lt;&lt; x &lt;&lt; " / " &lt;&lt; y &lt;&lt; " == ";
+            std::cout &lt;&lt; (x / y) &lt;&lt; std::endl;
             break;
         case(Opp::pow):
-            if(!quiet) std::cout << x << "^" << y << " == ";
-            std::cout << std::pow(x, y) << std::endl;
+            if(!quiet) std::cout &lt;&lt; x &lt;&lt; "^" &lt;&lt; y &lt;&lt; " == ";
+            std::cout &lt;&lt; std::pow(x, y) &lt;&lt; std::endl;
             break;
         default:
-            std::cerr << "how in heavens name did I get here" << std::endl;
+            std::cerr &lt;&lt; "how in heavens name did I get here" &lt;&lt; std::endl;
             return 1;
     }
     return 0;
