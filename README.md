@@ -64,3 +64,4 @@ where:
 
 As you can see *calc* uses one arg spec *@add|sub|mult|div|pow@* where as *calc2* does the same thing using one command line per *add*, through to *pow*, as a result I used @p.set_compact(true);@ in *calc2.cpp*.
 All of the programs corresponds to a .cpp file see the *Makefile* for details.
+
