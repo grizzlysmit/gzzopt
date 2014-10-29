@@ -104,20 +104,6 @@ bool set_opp(Opp &opp, const std::string value){
     return true;
 }
 
-std::string to_str(Opp opp){
-    using namespace std;
-    switch(opp){
-        case(Opp::none): return "Opp::none"s;
-        case(Opp::add): return "Opp::add"s;
-        case(Opp::sub): return "Opp::sub"s;
-        case(Opp::mult): return "Opp::mult"s;
-        case(Opp::div): return "Opp::div"s;
-        case(Opp::pow): return "Opp::pow"s;
-        default:
-            return "Erroneous value how'd that happen"s;
-    }
-}
-
 int main(int argc, char *argv[]){
     using namespace gzzopts;
     double x, y;
@@ -131,13 +117,11 @@ int main(int argc, char *argv[]){
                       positional(x, "a double value", "x").set_manditory(true),
                       positional(y, "a double value", "y").set_manditory(true),
                     };
-    //*
-    Opts opt{
+   Opts opt{
                       OptionSpec{&opt1, },
                       OptionSpec(help, "show this help", "help", 'h').set_manditory(true).set_cut(true),
            };
-    //*/
-
+   
     OptionParser p(argc, argv, opt);
     // parse away //
     if(!p.parse()){
