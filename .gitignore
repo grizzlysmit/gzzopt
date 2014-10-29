@@ -1,0 +1,13 @@
+#Francis Grizzly Smits .gitignore file for gzzopt
+
+#vim swap files
+
+.*.swp
+
+#project binarys
+
+*.o
+calc
+calc2
+example
+example0
