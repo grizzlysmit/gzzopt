@@ -116,6 +116,11 @@ int main(int argc, char *argv[]){
         p.fullusage();
         return 1;
     }
+    /////////////////////////////////////////////////////////////
+    //                                                         //
+    //             Use the variables that where set            //
+    //                                                         //
+    /////////////////////////////////////////////////////////////
     if(help){
         p.fullusage();
         return 0;

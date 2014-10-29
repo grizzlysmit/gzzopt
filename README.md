@@ -67,4 +67,123 @@ where:
 As you can see *calc* uses one argument spec *add|sub|mult|div|pow* where as *calc2* does the same thing using one command line per *add*, through to *pow*, as a result to avoid duplicate lines in the usage message; I used *p.set_compact(true);* in *calc2.cpp*.
 All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 
+####A brief explanation of the format of a program using gxxopts####
 
+The format of a program is as follows in <code>main(int argc, char \*argv[])</code> or similar, define one or more Opt objects, the elements of the Opt object are OptionSpec objects, these can be entered directly or via the convenience functions *positionnal* and *literal* which produce OptionSpec objects with extra options turned on a *positional* is just a positional argument, and a *literal* is a literal string to expect in addition OptionSpec has a initializer\_list constructor <code>OptionSpec(std::initializer\_list<Opts\*> opts)</code> which take a list of pointers to Opt objects (had to be pointers as Opts is an incomplete type at the time) so you can produce tree like structures. The constructor for Opt it self is a initializer\_list <code>Opts(std::initializer\_list<OptionSpec> lst)</code> so you can specify arbitrarily many elements.
+
+The OptionSpec elements are of the form variable/setter function, description a long opt name and an optional short opt char, and some optional boolean parameters to set things like positional multi etc use the convenience functions instead there are also setter functions that can be chained, these all take a single bool parameter and set the field their name suggests.
+
+Then when you have combined all this into one Opt object see *calc.cpp* and *call2.cpp*; construct a OptionParser object as follows <code>OptionParser p(argc, argv, opt);</code> then you can set a few parameters on the OptionParser object or not then call p.parse() this will return true on a error free run and false of error then if parse returned true just use the variables that where set, the variables can be std::list<T> and std::vector<T> types as well so you can have slurpy arrays ala perl6 too bellow is some sample code to illustrate:
+
+<pre>
+   <code>
+#include "gzzopt.hpp"
+
+#include <string>
+#include <cmath>
+
+enum class Opp  { none, add, sub, mult, div, pow };
+
+bool set_opp(Opp &opp, const std::string value){
+    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tvalue == " << value << "\t__func__ == " << __func__ << std::endl;
+    if(value == "add"){
+        opp = Opp::add;
+    }else if(value == "sub"){
+        opp = Opp::sub;
+    }else if(value == "mult"){
+        opp = Opp::mult;
+    }else if(value == "div"){
+        opp = Opp::div;
+    }else if(value == "pow"){
+        opp = Opp::pow;
+    }else{
+        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+        return false;
+    }
+    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+    return true;
+}
+
+std::string to_str(Opp opp){
+    using namespace std;
+    switch(opp){
+        case(Opp::none): return "Opp::none"s;
+        case(Opp::add): return "Opp::add"s;
+        case(Opp::sub): return "Opp::sub"s;
+        case(Opp::mult): return "Opp::mult"s;
+        case(Opp::div): return "Opp::div"s;
+        case(Opp::pow): return "Opp::pow"s;
+        default:
+            return "Erroneous value how'd that happen"s;
+    }
+}
+
+int main(int argc, char *argv[]){
+    using namespace gzzopts;
+    double x, y;
+    Opp opp = Opp::none;
+    bool quiet = true, help = false;
+    function_str verb = [&quiet](const std::string& val) -> bool { quiet = false; return !quiet; };
+    Opts opt1{OptionSpec(help, "show this help", "help", 'h'),
+                      OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
+                      OptionSpec([&quiet](const std::string& val) -> bool { return quiet = true; }, "proceed quietly", "quiet", 'q' ), 
+                      literal([&opp](const std::string& n) -> bool { return set_opp(opp, n); }, "apply op to x and y", "add|sub|mult|div|pow").set_no_more_opts(true),
+                      positional(x, "a double value", "x").set_manditory(true),
+                      positional(y, "a double value", "y").set_manditory(true),
+                    };
+    //*
+    Opts opt{
+                      OptionSpec{&opt1, },
+                      OptionSpec(help, "show this help", "help", 'h').set_manditory(true).set_cut(true),
+           };
+    //*/
+
+    OptionParser p(argc, argv, opt);
+    // parse away //
+    if(!p.parse()){
+        p.fullusage();
+        return 1;
+    }
+    /////////////////////////////////////////////////////////////
+    //                                                         //
+    //             Use the variables that where set            //
+    //                                                         //
+    /////////////////////////////////////////////////////////////
+    if(help){
+        p.fullusage();
+        return 0;
+    }
+    switch(opp){
+        case(Opp::none):
+            std::cout << "nothing to do" << std::endl;
+            break;
+        case(Opp::add):
+            if(!quiet) std::cout << x << " + " << y << " == ";
+            std::cout << (x + y) << std::endl;
+            break;
+        case(Opp::sub):
+            if(!quiet) std::cout << x << " - " << y << " == ";
+            std::cout << (x - y) << std::endl;
+            break;
+        case(Opp::mult):
+            if(!quiet) std::cout << x << " * " << y << " == ";
+            std::cout << (x * y) << std::endl;
+            break;
+        case(Opp::div):
+            if(!quiet) std::cout << x << " / " << y << " == ";
+            std::cout << (x / y) << std::endl;
+            break;
+        case(Opp::pow):
+            if(!quiet) std::cout << x << "^" << y << " == ";
+            std::cout << std::pow(x, y) << std::endl;
+            break;
+        default:
+            std::cerr << "how in heavens name did I get here" << std::endl;
+            return 1;
+    }
+    return 0;
+}
+   </code>
+</pre>
+
+    

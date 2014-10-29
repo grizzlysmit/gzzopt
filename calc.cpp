@@ -78,10 +78,16 @@ int main(int argc, char *argv[]){
     //*/
 
     OptionParser p(argc, argv, opt);
+    // parse away //
     if(!p.parse()){
         p.fullusage();
         return 1;
     }
+    /////////////////////////////////////////////////////////////
+    //                                                         //
+    //             Use the variables that where set            //
+    //                                                         //
+    /////////////////////////////////////////////////////////////
     if(help){
         p.fullusage();
         return 0;
