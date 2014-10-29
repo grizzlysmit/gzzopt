@@ -106,7 +106,8 @@ int main(int argc, char \*argv[]){
                     };
    Opts opt{
                       OptionSpec{&opt1, },
-                      OptionSpec(help, "show this help", "help", 'h').set_manditory(true).set_cut(true),
+                      OptionSpec(help, "show this help",
+                              "help", 'h').set_manditory(true).set_cut(true),
            };
    
     OptionParser p(argc, argv, opt);
