@@ -1,6 +1,8 @@
 This is the start of the gzzopt option parsing library
 ======================================================
 
+##Author: Francis Grizzly Smit##
+
 The library (not a lib yet) is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 4 exaple programs *calc, calc2, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotta is 
 that *example0* tries to have the command line:
 <pre>
