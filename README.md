@@ -78,9 +78,8 @@ Then when you have combined all this into one Opt object see *calc.cpp* and *cal
 <pre>
    <code>
 #include "gzzopt.hpp"
-
-#include <string>
-#include <cmath>
+#include &lt;string&gt;
+#include &lt;cmath&gt;
 
 enum class Opp  { none, add, sub, mult, div, pow };
 
