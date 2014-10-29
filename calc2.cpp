@@ -106,7 +106,12 @@ int main(int argc, char *argv[]){
     //*/
 
     OptionParser p(argc, argv, opt);
+
+    // compact the usage messages generated //
+
     p.set_compact(true);
+
+    // and parse 
     if(!p.parse()){
         p.fullusage();
         return 1;
