@@ -18,7 +18,7 @@ the problem is *install* shadows *info* and info is treated as a package argumen
 ./example info &lt;pacakage&gt;...
 </pre>
 
-This works fine; try each *calc* and *calc2* are the same except for how there arguments are specified, to wit:
+This works fine, try each; *calc* and *calc2* are the same except for how there arguments are specified, to wit:
 <pre>
 21:26:00 grizzlysmit@rakbat:~/Projects/C++/gzzoption$ ./calc --help
 ./calc --help|-h
