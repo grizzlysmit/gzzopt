@@ -73,7 +73,7 @@ The format of a program is as follows in <code>main(int argc, char \*argv[])</co
 
 The OptionSpec elements are of the form variable/setter function, description a long opt name and an optional short opt char, and some optional boolean parameters to set things like positional multi etc use the convenience functions instead there are also setter functions that can be chained, these all take a single bool parameter and set the field their name suggests.
 
-Then when you have combined all this into one Opt object see *calc.cpp* and *call2.cpp*; construct a OptionParser object as follows <code>OptionParser p(argc, argv, opt);</code> then you can set a few parameters on the OptionParser object or not then call p.parse() this will return true on a error free run and false of error; then if parse returned true just use the variables that where set, the variables can be std::list&lt;T&gt; and std::vector&lt;T&gt; types as well so you can have slurpy arrays ala perl6 too bellow is some sample code to illustrate:
+Then when you have combined all this into one Opt object see *calc.cpp* and *call2.cpp*; construct a OptionParser object as follows <code>OptionParser p(argc, argv, opt);</code> then you can set a few parameters on the OptionParser object or not then call p.parse() this will return true on a error free run and false of error; then if parse returned true just use the variables that where set, the variables can be std::list&lt;T&gt; and std::vector&lt;T&gt; types as well so you can have slurpy arrays ala perl6 too; bellow is some sample code to illustrate:
 
 <pre>
    <code>
