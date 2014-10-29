@@ -53,8 +53,6 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
     
     std::regex option_matcher("^--([[:alpha:]][-_[:alpha:]]+)(=(.*))?$|^-([a-zA-Z]+)$");
 
-    std::regex option_specifier("^(([a-zA-Z]),)?([a-zA-Z][-_a-zA-Z]+)$");
-
     std::vector<std::tuple<std::vector<std::string>::size_type, std::vector<OptionSpec>::size_type>> backtrace;
 
     std::vector<OptionSpec>::size_type current = 0;
