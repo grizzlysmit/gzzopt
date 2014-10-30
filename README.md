@@ -106,7 +106,7 @@ int main(int argc, char\* argv[]){
         return 0;
     }
 
-    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; '"' &lt;&lt; s &lt;&lt; "\\" ";
+    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; '"' &lt;&lt; s &lt;&lt; "\" ";
     std::cout &lt;&lt; std::endl;
     return 0;
 }
