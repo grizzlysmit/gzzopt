@@ -69,7 +69,49 @@ All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 
 ###Count###
 
-*count* shows a simple example of an incrementing integer option see *count.cpp*, this is done with an incrementing function, this is the best solution for this problem, I could do it by adding still more helper classes and special constructors and it gets progressively more ugly, so I bailed for something which will have fewer problems, and I think is an eloquent solution.
+*count* shows a simple example of an incrementing integer option see *count.cpp*, this is done with an incrementing function, this is the best solution for this problem, I could do it by adding still more helper classes and special constructors and it gets progressively more ugly, so I bailed for something which will have fewer problems, and I think is an eloquent solution. see code below, or read *count.cpp*.
+
+<pre>
+    <code>
+
+#include "gzzopt.hpp"
+#include &lt;string&gt;
+
+
+int main(int argc, char\* argv[]){
+    using namespace gzzopts;
+    int cnt = 0;
+    bool help = false;
+    std::string s;
+
+    Opts opt{OptionSpec(help, "show this help", "help", 'h'),
+              OptionSpec([&cnt]() -&gt; bool { return ++cnt; }, "increment the number of times to repeat", "count", 'c' ).set_multi(true), 
+              positional(s, "a string", "s").set_manditory(true),
+            };
+
+    OptionParser p(argc, argv, opt);
+    // parse away //
+    if(!p.parse()){
+        p.fullusage();
+        return 1;
+    }
+    /////////////////////////////////////////////////////////////
+    //                                                         //
+    //             Use the variables that where set            //
+    //                                                         //
+    /////////////////////////////////////////////////////////////
+    if(help){
+        p.fullusage();
+        return 0;
+    }
+
+    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; s &lt;&lt; " ";
+    std::cout &lt;&lt; std::endl;
+    return 0;
+}
+
+    </code>
+</pre>
 
 ####A brief explanation of the format of a program using gxxopts####
 
