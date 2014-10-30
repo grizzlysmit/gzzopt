@@ -2,7 +2,7 @@
 CC=g++
 #CC=clang++
 # options I'll pass to the compiler.
-CFLAGS=-c -Wall -std=c++1y
+CFLAGS=-c -Wall -std=c++1y -g
 
 all: example example0 calc calc2
 

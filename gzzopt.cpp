@@ -47,7 +47,7 @@ gzzopts::OptionSpec gzzopts::literal(function_str f, const std::string desc, con
     return OptionSpec(f, desc, name, '\0', false).set_positional(true).set_manditory(true).set_literal(true).set_cut(true);
 };
 
-bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner){
+bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner, const int depth){
     using namespace std;
     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
     
@@ -58,6 +58,8 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
     std::vector<OptionSpec>::size_type current = 0;
 
     bool res = true, break_loop = false;
+
+    std::map<std::string, unsigned> seen;
 
     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
     for( ; i < args.size(); i++){
@@ -92,7 +94,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
         std::smatch result;
         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
         std::regex_match(args[i], result, option_matcher);
-        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\ti == " << i << std::endl;
         if(result.empty() || no_more_opts){
             // positional //
             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
@@ -126,7 +128,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tj == " << j << "k == " << k << std::endl;
                     for(Opts* o : specs[k].rest()){
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == " << o << std::endl;
-                        res = o->parse(op, progname, args, j, no_more_opts, true);
+                        res = o->parse(op, progname, args, j, no_more_opts, true, depth + 1);
                         if(res){
                             break_loop = true;
                         }
@@ -161,7 +163,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tj == " << j << "k == " << k << std::endl;
                             for(Opts* o : specs[k].rest()){
                                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == " << o << std::endl;
-                                res = o->parse(op, progname, args, j, no_more_opts, true);
+                                res = o->parse(op, progname, args, j, no_more_opts, true, depth + 1);
                                 if(res){
                                     break_loop = true;
                                     break;
@@ -220,7 +222,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << "\tj == " << j << "\tk == " << k << std::endl;
                                 for(Opts* o : specs[k].rest()){
                                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << "\to == " << o << std::endl;
-                                    res = o->parse(op, progname, args, j, no_more_opts, true);
+                                    res = o->parse(op, progname, args, j, no_more_opts, true, depth + 1);
                                     if(res){
                                         break_loop = true;
                                         break;
@@ -255,7 +257,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     std::tie(j, k) = p;
                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                     for(Opts* o : specs[k].rest()){
-                        res = o->parse(op, progname, args, j, no_more_opts, true);
+                        res = o->parse(op, progname, args, j, no_more_opts, true, depth + 1);
                         if(res){
                             break_loop = true;
                             break;
@@ -313,6 +315,12 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tvalue == " << value << std::endl;
                         basic_var* var = specs[j].get_var();
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << std::endl;
+                        if(var->isset() && !specs[j].multi()){
+                            std::cerr << "error tryed to set --" << a << " multiple times." << std::endl;
+                            res = false;
+                            finished = true;
+                            break;
+                        }
                         if(var->set_value(value)){
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                             res = true;
@@ -355,7 +363,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     std::vector<OptionSpec>::size_type k;
                     std::tie(j, k) = p;
                     for(Opts* o : specs[k].rest()){
-                        res = o->parse(op, progname, args, j, no_more_opts, true);
+                        res = o->parse(op, progname, args, j, no_more_opts, true, depth + 1);
                         if(res){
                             break_loop = true;
                             break;
@@ -375,8 +383,8 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tresult.size() == " << result.size() << std::endl;
                 //for(std::string r : result) std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tr == " << r << std::endl;
                 std::string a = result[4];
-                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\ta == " << a << std::endl;
-                bool finished = false;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\ta == " << a << "\ti == " << i << "\tinner == " << std::boolalpha << inner << std::endl;
+                bool finished = false, done = false;
                 for(char o : a){
                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == " << o << std::endl;
                     std::vector<OptionSpec>::size_type j = 0;
@@ -400,7 +408,22 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                             }
                             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == -" << o << "\tvalue == " << value << std::endl;
                             basic_var* var = specs[j].get_var();
+                            if(var->isset() && !specs[j].multi()){
+                                res = false;
+                                finished = true;
+                                done = true;
+                                if(seen.count("-"s + o) == 0){
+                                    seen["-"s + o] = 1;
+                                }else{
+                                    seen["-"s + o]++;
+                                    std::cerr << "error tryed to set -" << o << " multiple times." << std::endl;
+                                    op->set_stored_result(res);
+                                }
+                                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << std::endl;
+                                break;
+                            }
                             if(var->set_value(value)){
+                                seen["-"s + o] = 1;
                                 res = true;
                                 finished = true;
                                 if(specs[j].no_more_opts()){
@@ -409,6 +432,8 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                                 if(specs[j].cut()){
                                     op->set_winner(this);
                                 }
+                                finished = true;
+                                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << "\tfinished == " << finished << std::endl;
                                 break;
                             }else{
                                 if(specs[j].expects_arg()){
@@ -425,21 +450,27 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == -" << o << "\tfinished == " << std::boolalpha << finished << std::endl;
                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == -" << o << "\tres == " << std::boolalpha << res << std::endl;
                     if(finished){
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << "\tfinished == " << finished << std::endl;
                         finished = false; // for next time //
                         //if(i + 1 >= args.size()) return res;
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\to == -" << o << std::endl;
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tres == " << std::boolalpha << res << std::endl;
+                        if(done){
+                            break;
+                        }
                         op->set_stored_result(res);
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << "\tfinished == " << finished << std::endl;
                         continue;
                     }
                     if(j >= current){
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << "\tfinished == " << finished << std::endl;
                         for(auto p : backtrace){
                             std::vector<std::string>::size_type l;
                             std::vector<OptionSpec>::size_type k;
                             std::tie(l, k) = p;
                             for(Opts* opt : specs[k].rest()){
-                                res = opt->inner_parse(op, progname, o, args, l);
-                                if(res){
+                                res = opt->inner_parse(op, progname, o, args, l, done, depth + 1, seen);
+                                if(res || done){
                                     break_loop = true;
                                     break;
                                 }
@@ -450,16 +481,21 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                             }
                         }
                     }
+                    if(done) break;
                     if(!res){
                         op->set_bad_opt_lst("-"s + o, res);
                     }
+                } // for(char o : a) //
+                if(done){
+                    done = false;
+                    continue;
                 }
                 //if(inner) return res;
             }else{
                 std::cerr << "error: never should have got here faulty algorithm " << args[i] << " doe not start with - or -- bailing" << std::endl;
                 return false;
             }
-        }
+        } // else -->  if(result.empty() || no_more_opts) //
     } // for( ; i < args.size(); i++) //
     //current++;
     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
@@ -518,17 +554,14 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
     }
 }
 
-bool gzzopts::Opts::inner_parse(OptionParser* op, std::string progname, char o, std::vector<std::string> args, std::vector<std::string>::size_type& i){
+bool gzzopts::Opts::inner_parse(OptionParser* op, std::string progname, char o, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool& done, const int depth, std::map<std::string, unsigned>& seen){
+
+    using namespace std;
 
     std::vector<std::tuple<std::vector<std::string>::size_type, std::vector<OptionSpec>::size_type>> backtrace;
 
     std::vector<OptionSpec>::size_type current = 0;
 
-    /*
-    if(specs[current].rest().size() > 0){
-        backtrace.insert(backtrace.begin(), std::make_tuple(i, current));
-    }
-    // */
     while(current < specs.size() && !specs[current].positional()){ // find the next positional //
         if(specs[current].rest().size() > 0){
             backtrace.insert(backtrace.begin(), std::make_tuple(i, current));
@@ -556,7 +589,21 @@ bool gzzopts::Opts::inner_parse(OptionParser* op, std::string progname, char o, 
                     }
             }
             basic_var* var = specs[j].get_var();
+            if(var->isset() && !specs[j].multi()){
+                if(seen.count("-"s + o) == 0){
+                    seen["-"s + o] = 1;
+                }else{
+                    seen["-"s + o]++;
+                    std::cerr << "error tryed to set -" << o << " multiple times." << std::endl;
+                    op->set_stored_result(false);
+                }
+                done = true;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << std::endl;
+                return false;
+            }
             if(var->set_value(value)){
+                seen["-"s + o] = 1;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tdone == " << std::boolalpha << done << std::endl;
                 if(specs[j].cut()){
                     op->set_winner(this);
                 }
@@ -577,7 +624,8 @@ bool gzzopts::Opts::inner_parse(OptionParser* op, std::string progname, char o, 
             std::vector<OptionSpec>::size_type k;
             std::tie(l, k) = p;
             for(Opts* opt : specs[k].rest()){
-                if(opt->inner_parse(op, progname, o, args, l)) return true;
+                if(opt->inner_parse(op, progname, o, args, l, done, depth + 1, seen)) return true;
+                if(done) return false;
             }
         }
     }
@@ -586,7 +634,7 @@ bool gzzopts::Opts::inner_parse(OptionParser* op, std::string progname, char o, 
 
 bool gzzopts::OptionParser::parse(){
     std::vector<std::string>::size_type i = 0;
-    bool result = opts.parse(this, progname, args, i, false, false);
+    bool result = opts.parse(this, progname, args, i, false, false, 0);
     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tresult == " << std::boolalpha << result << "\t_stored_result == " << _stored_result << std::endl;
     if(!_stored_result){
         for(auto o : _bad_opt_lst){
@@ -606,7 +654,9 @@ bool gzzopts::USAGE(const std::string& progname, const Opts opts){
 }
 
 bool gzzopts::DISCRIBEUSAGE(const Opts opts, const bool seg_desc, const bool compact){
+
     using namespace std;
+
     str_pair_vec out;
     std::string::size_type width = 1;
     opts.discribeusage(out, width, seg_desc, compact);

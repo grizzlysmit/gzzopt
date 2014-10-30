@@ -27,6 +27,7 @@
 #include <initializer_list>
 #include <functional>
 #include <tuple>
+#include <map>
 
 namespace gzzopts {
     class OptError : public std::exception {
@@ -155,6 +156,7 @@ namespace gzzopts {
             virtual bool set_value(const std::string&){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                 //if(!func) throw NoFunctionProvided("No Function provided");
+                is_set = true;
                 return true;
             };
             virtual basic_var* copy(){
@@ -171,6 +173,7 @@ namespace gzzopts {
             virtual bool set_value(const std::string&){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                 if(!func) throw NoFunctionProvided("No Function provided");
+                is_set = true;
                 return func();
             };
             virtual basic_var* copy(){
@@ -186,6 +189,7 @@ namespace gzzopts {
             virtual bool set_value(const std::string& val){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
                 if(!func) throw NoFunctionProvided("No Function provided");
+                is_set = true;
                 return func(val);
             };
             virtual basic_var* copy(){
@@ -392,9 +396,9 @@ namespace gzzopts {
             Opts(std::initializer_list<OptionSpec> lst) : specs(lst){
                 //
             };
-            bool parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner);
+            bool parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner, const int depth);
         protected:
-            bool inner_parse(OptionParser* op, std::string progname, char o, std::vector<std::string> args, std::vector<std::string>::size_type& i);
+            bool inner_parse(OptionParser* op, std::string progname, char o, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool& done, const int depth, std::map<std::string, unsigned>& seen);
         public:
             bool usage(std::string progname) const;
             bool discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc, const bool compact) const;
