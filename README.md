@@ -114,7 +114,7 @@ int main(int argc, char\* argv[]){
 </pre>
 
 ######NB#######
-Have to use *strvalue* to allow arbitary strings, should just been a variant of *positional* but my compiler goes to the **template** version instead.
+Have to use *strvalue* to allow arbitary strings, should just been a variant of *positional* but my compiler goes to the **template** version instead. :P
 
 
 ####A brief explanation of the format of a program using gxxopts####
