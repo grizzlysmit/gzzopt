@@ -342,6 +342,7 @@ namespace gzzopts {
             const bool expects_arg() const { return _expects_arg; };
             OptionSpec& set_expects_arg(const bool expects) { _expects_arg = expects; return *this; };
             const bool multi() const { return _multi; };
+            OptionSpec& set_multi(bool mul) { _multi = mul; return *this; };
             const bool integer() const { return _integer; };
             const bool manditory() const { return _manditory; };
             OptionSpec& set_manditory(bool mand) { _manditory = mand; return *this; };
