@@ -4,7 +4,7 @@ CC=g++
 # options I'll pass to the compiler.
 CFLAGS=-c -Wall -std=c++1y -g
 
-all: example example0 calc calc2 count
+all: example example0 calc calc2 count empty
 
 example: gzzopt.o example.o
 	$(CC) gzzopt.o example.o -o example
@@ -20,6 +20,9 @@ calc2: gzzopt.o calc2.o
 
 count: gzzopt.o count.o
 	$(CC) gzzopt.o count.o -o count
+
+empty: gzzopt.o empty.o
+	$(CC) gzzopt.o empty.o -o empty
 
 gzzopt.o: gzzopt.cpp gzzopt.hpp
 	$(CC) $(CFLAGS) gzzopt.cpp
@@ -38,6 +41,9 @@ calc2.o: calc2.cpp
 
 count.o: count.cpp
 	$(CC) $(CFLAGS) count.cpp
+
+empty.o: empty.cpp
+	$(CC) $(CFLAGS) empty.cpp
 
 clean:
 	rm -rf *.o example example0 calc calc2
