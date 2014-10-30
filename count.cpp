@@ -48,7 +48,7 @@ int main(int argc, char* argv[]){
         return 0;
     }
 
-    for(int i = 0; i < cnt; i++) std::cout << '"' << s << "\" ";
+    for(int i = 0; i < cnt; i++) std::cout << '`' << s << "' ";
     std::cout << std::endl;
     return 0;
 }
