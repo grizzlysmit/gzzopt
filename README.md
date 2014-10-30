@@ -87,7 +87,7 @@ int main(int argc, char\* argv[]){
               OptionSpec([&cnt]() -&gt; bool { return ++cnt; },
                       "increment the number of times to repeat",
                                   "count", 'c' ).set_multi(true), 
-              positional(s, "a string", "s").set_manditory(true),
+              strvalue(s, "a string", "s").set_manditory(true),
             };
 
     OptionParser p(argc, argv, opt);
@@ -112,6 +112,10 @@ int main(int argc, char\* argv[]){
 }
    </code>
 </pre>
+
+######NB#######
+Have to use *strvalue* to allow arbitary strings, should just been a variant of *positional* but my compiler goes to the **template** version instead.
+
 
 ####A brief explanation of the format of a program using gxxopts####
 
