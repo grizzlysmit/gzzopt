@@ -103,8 +103,8 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\ti == " << i << std::endl;
         if(result.empty() || no_more_opts){
             // positional //
-            std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
-            std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\targs[i] == " << args[i] << std::endl;
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\targs[i] == " << args[i] << std::endl;
             while(current < specs.size() && !specs[current].positional()){ // find the next positional //
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
                 if(specs[current].rest().size() > 0){
@@ -119,7 +119,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
             }
             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
             if(current >= specs.size()){ // overshot the end of the current Opts specification so try the alternatives //
-                std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tthis == " << this << "\top->winner() == " << op->winner() << std::endl;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tthis == " << this << "\top->winner() == " << op->winner() << std::endl;
                 if(this == op->winner()){
                     std::cerr << "to many arguments for this command line: [";
                     for(std::vector<std::string>::size_type m = i; m < args.size(); m++) std::cerr << args[m] << ", ";
@@ -148,7 +148,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                 break;
                 //return res;  // out of options //
             }
-            std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
             if(specs[current].positional()){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << std::endl;
                 if(specs[current].literal()){
@@ -208,10 +208,10 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     }
                 }else{
                     // value of some kind //
-                    std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\targs[i] == " << args[i] << "\ti == " << i << std::endl;
+                    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\targs[i] == " << args[i] << "\ti == " << i << std::endl;
                     basic_var* var = specs[current].get_var();
                     if(var->set_value(args[i])){
-                        std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
+                        //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
                         if(specs[current].no_more_opts()){
                             no_more_opts = true;
                         }
@@ -226,7 +226,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                                 std::vector<std::string>::size_type j;
                                 std::vector<OptionSpec>::size_type k;
                                 std::tie(j, k) = p;
-                                std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << "\tj == " << j << "\tk == " << k << std::endl;
+                                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << "\tj == " << j << "\tk == " << k << std::endl;
                                 for(Opts* o : specs[k].rest()){
                                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << "\to == " << o << std::endl;
                                     res = o->parse(op, progname, args, j, no_more_opts, true, depth + 1);

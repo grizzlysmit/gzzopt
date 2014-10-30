@@ -307,11 +307,11 @@ namespace gzzopts {
             };
             OptionSpec(std::string& s, const char* desc, const char* long_opt, const char short_opt = '\0', Fudge fdg = Fudge::f2, bool multi = false, bool manditory = false)
               : var(new VarStr(s)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
-                std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
             };
             OptionSpec(std::string& s, const std::string desc, const std::string long_opt, const char short_opt = '\0', Fudge fdg = Fudge::f2, bool multi = false, bool manditory = false)
               : var(new VarStr(s)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
-                std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
             };
             template<class T>
                 OptionSpec(std::list<T>& v, const char* desc, const char* long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
