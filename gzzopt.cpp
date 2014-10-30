@@ -28,10 +28,10 @@ gzzopts::OptionSpec gzzopts::positional(bool& v, const std::string desc, const s
     return OptionSpec(v, desc, name, '\0', true).set_positional(true).set_manditory(true);
 };
 gzzopts::OptionSpec gzzopts::strvalue(std::string& v, const char* desc, const char* name){
-    return OptionSpec(v, desc, name, '\0', Fudge::f1, true).set_positional(true).set_manditory(true);
+    return OptionSpec(v, desc, name, '\0', Fudge::f1, false).set_positional(true).set_manditory(true);
 };
 gzzopts::OptionSpec gzzopts::strvalue(std::string& v, const std::string desc, const std::string& name){
-    return OptionSpec(v, desc, name, '\0', Fudge::f1, true).set_positional(true).set_manditory(true);
+    return OptionSpec(v, desc, name, '\0', Fudge::f1, false).set_positional(true).set_manditory(true);
 };
 gzzopts::OptionSpec gzzopts::positional(function_void f, const std::string desc, const std::string& name){
     return OptionSpec(f, desc, name, '\0', false).set_positional(true).set_manditory(true);
@@ -210,6 +210,11 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     // value of some kind //
                     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\targs[i] == " << args[i] << "\ti == " << i << std::endl;
                     basic_var* var = specs[current].get_var();
+                    if(var->isset() && !specs[current].multi()){
+                        std::cerr << "error tryed to set " << specs[current].long_opt() << " multiple times." << std::endl;
+                        op->set_stored_result(false);
+                        return false;
+                    }
                     if(var->set_value(args[i])){
                         //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
                         if(specs[current].no_more_opts()){
