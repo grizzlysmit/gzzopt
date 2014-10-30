@@ -101,7 +101,7 @@ int main(int argc, char *argv[]){
     //*
     Opts opt{
                       OptionSpec{&opt1, &opt2, &opt3, &opt4, &opt5, },
-                      OptionSpec(help, "show this help", "help", 'h'),
+                      OptionSpec(help, "show this help", "help", 'h').set_manditory(true),
            };
     //*/
 

@@ -65,6 +65,33 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
 
     bool res = true, break_loop = false;
 
+    if(args.empty()){ // deal with empty command line cases //
+        while(current < specs.size()){ // check the entire spec //
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
+            if(specs[current].rest().size() > 0){
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
+                backtrace.insert(backtrace.begin(), std::make_tuple(i, current));
+            }
+            current++;
+            if(specs[current].positional()){
+                if(specs[current].manditory()){
+                    if(specs[current].long_opt() == ""s) continue;
+                    std::cerr << "error maniditory arg <" << specs[current].long_opt() << "> not found" << std::endl;
+                    res = false;
+                }
+            }else{
+                if(specs[current].manditory()){
+                    if(specs[current].long_opt() == ""s) continue;
+                    std::cerr << "error maniditory arg <--" << specs[current].long_opt() 
+                              << (specs[current].short_opt()?("|"s + specs[current].short_opt()):""s)  
+                              << "> not found" << std::endl;
+                    res = false;
+                }
+            }
+        } // while(current < specs.size()) // check the entire spec //
+        return res;
+    } // if(args.empty()) // deal with empty command line cases //
+
     std::map<std::string, unsigned> seen;
 
     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
@@ -708,13 +735,13 @@ bool gzzopts::Opts::usage(std::string progname) const {
         }else{
             if(specs[i].expects_arg()){
                 if(specs[i].manditory()){
-                    os << " --" << specs[i].long_opt() << '=' << specs[i].long_opt() << (specs[i].short_opt()? (std::string("|-") + specs[i].short_opt() + " " + specs[i].long_opt()):std::string(""));
+                    os << " <--" << specs[i].long_opt() << '=' << specs[i].long_opt() << (specs[i].short_opt()? (std::string("|-") + specs[i].short_opt() + " " + specs[i].long_opt()):std::string("")) << '>';
                 }else{
                     os << " [--" << specs[i].long_opt() << '=' << specs[i].long_opt() << (specs[i].short_opt()? (std::string("|-") + specs[i].short_opt() + " " + specs[i].long_opt()):std::string("")) << ']';
                 }
             }else{
                 if(specs[i].manditory()){
-                    os << " --" << specs[i].long_opt() << (specs[i].short_opt()? (std::string("|-") + specs[i].short_opt()):std::string(""));
+                    os << " <--" << specs[i].long_opt() << (specs[i].short_opt()? (std::string("|-") + specs[i].short_opt()):std::string("")) << '>';
                 }else{
                     os << " [--" << specs[i].long_opt() << (specs[i].short_opt()? (std::string("|-") + specs[i].short_opt()):std::string("")) << ']';
                 }
