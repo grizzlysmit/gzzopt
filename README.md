@@ -72,7 +72,7 @@ All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 *count* shows a simple example of an incrementing integer option see *count.cpp*, this is done with an incrementing function, this is the best solution for this problem, I could do it by adding still more helper classes and special constructors and it gets progressively more ugly, so I bailed for something which will have fewer problems, and I think is an eloquent solution. see code below, or read *count.cpp*:
 
 <pre>
-    <code>
+   <code>
 #include "gzzopt.hpp"
 #include &lt;string&gt;
 
@@ -110,7 +110,7 @@ int main(int argc, char\* argv[]){
     std::cout &lt;&lt; std::endl;
     return 0;
 }
-    </code>
+   </code>
 </pre>
 
 ####A brief explanation of the format of a program using gxxopts####
