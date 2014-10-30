@@ -73,7 +73,6 @@ All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 
 <pre>
     <code>
-
 #include "gzzopt.hpp"
 #include &lt;string&gt;
 
@@ -111,7 +110,6 @@ int main(int argc, char\* argv[]){
     std::cout &lt;&lt; std::endl;
     return 0;
 }
-
     </code>
 </pre>
 
