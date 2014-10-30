@@ -85,7 +85,9 @@ int main(int argc, char\* argv[]){
     std::string s;
 
     Opts opt{OptionSpec(help, "show this help", "help", 'h'),
-              OptionSpec([&cnt]() -&gt; bool { return ++cnt; }, "increment the number of times to repeat", "count", 'c' ).set_multi(true), 
+              OptionSpec([&cnt]() -&gt; bool { return ++cnt; },
+                      "increment the number of times to repeat",
+                                  "count", 'c' ).set_multi(true), 
               positional(s, "a string", "s").set_manditory(true),
             };
 
