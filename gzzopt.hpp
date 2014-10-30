@@ -78,6 +78,27 @@ namespace gzzopts {
                     //if(var) delete var;
                 };
         };
+    class VarStr : public basic_var {
+        private:
+            using value_type = std::string;
+            value_type* var = nullptr;
+        public:
+            VarStr(std::string &v) : var(&v) { };
+            virtual bool set_value(const std::string& val){
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here\tval == " << val << std::endl;
+                if(!var) throw NoVaribleProvided("No Variable provided");
+                *var = val;
+                is_set = true;
+                //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here\tis.eof() == " << is.eof() << std::endl;
+                return true;
+            };
+            virtual basic_var* copy(){
+                return new VarStr(*var);
+            };
+            virtual ~VarStr(){
+                //if(var) delete var;
+            };
+    };
     template<>
         class Var<bool> : public basic_var {
             private:
@@ -198,6 +219,7 @@ namespace gzzopts {
             virtual ~Func(){ };
     };
     class Opts;
+    enum class Fudge {f1, f2};
     class OptionSpec {
         private:
             friend class Opts;
@@ -283,6 +305,14 @@ namespace gzzopts {
               : var(new Var<bool>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(false), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
             };
+            OptionSpec(std::string& s, const char* desc, const char* long_opt, const char short_opt = '\0', Fudge fdg = Fudge::f2, bool multi = false, bool manditory = false)
+              : var(new VarStr(s)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
+                std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
+            };
+            OptionSpec(std::string& s, const std::string desc, const std::string long_opt, const char short_opt = '\0', Fudge fdg = Fudge::f2, bool multi = false, bool manditory = false)
+              : var(new VarStr(s)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
+                std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here: var == " << var << " _long == " << _long << std::endl;
+            };
             template<class T>
                 OptionSpec(std::list<T>& v, const char* desc, const char* long_opt, const char short_opt = '\0', bool positional = false, bool manditory = false)
                   : var(new Var<std::list<T>>(v)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(true), _manditory(manditory), _integer(false), _positional(positional), _literal(false), _cut(false), _no_more_opts(false) {
@@ -327,7 +357,7 @@ namespace gzzopts {
             };
             ~OptionSpec(){
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here: var == " << var << "  _long == " << _long << std::endl;
-                //if(var) delete var;
+                if(var) delete var;
             };
             basic_var* get_var() {
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here: var == " << var << "  _long == " << _long << std::endl;
@@ -375,6 +405,8 @@ namespace gzzopts {
     extern OptionSpec positional(bool& v, const std::string desc, const std::string& name);
     extern OptionSpec positional(function_void f, const std::string desc, const std::string& name);
     extern OptionSpec positional(function_str f, const std::string desc, const std::string& name);
+    extern OptionSpec strvalue(std::string& v, const char* desc, const char* name);
+    extern OptionSpec strvalue(std::string& v, const std::string desc, const std::string& name);
     template<class T>
         OptionSpec literal(T& v, const std::string desc, const std::string name, bool multi = false){
             return OptionSpec(v, desc, name, '\0', multi).set_positional(true).set_manditory(true).set_literal(true).set_cut(true);

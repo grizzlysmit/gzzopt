@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
 
     Opts opt{OptionSpec(help, "show this help", "help", 'h'),
               OptionSpec([&cnt]() -> bool { return ++cnt; }, "increment the number of times to repeat", "count", 'c' ).set_multi(true), 
-              positional(s, "a string", "s").set_manditory(true),
+              strvalue(s, "a string", "s").set_manditory(true),
             };
 
     OptionParser p(argc, argv, opt);
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]){
         return 0;
     }
 
-    for(int i = 0; i < cnt; i++) std::cout << s << " ";
+    for(int i = 0; i < cnt; i++) std::cout << '"' << s << "\" ";
     std::cout << std::endl;
     return 0;
 }
