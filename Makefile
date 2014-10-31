@@ -55,16 +55,16 @@ count.o: count.cpp
 empty.o: empty.cpp
 	$(CC) $(CFLAGS) empty.cpp
 
-libs: static dyn
+libs: libgzzopt.a libgzzopt.so
 
-static: gzzopt.o
+libgzzopt.a: gzzopt.o
 ifeq ($(UNAME),Linux)
 	ar -cvq libgzzopt.a gzzopt.o
 else
 	echo "don't know how to do static libs on $(UNAME)" 
 endif
 
-dyn: gzzopt.o
+libgzzopt.so: gzzopt.o
 ifeq ($(UNAME),Linux)
 	$(CC) -shared -fPIC -o libgzzopt.so gzzopt.o 
 else
