@@ -72,7 +72,12 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tcurrent == " << current << "\ti == " << i << std::endl;
                 backtrace.insert(backtrace.begin(), std::make_tuple(i, current));
             }
-            current++;
+            /*
+            if(specs[current].is_novar()){
+                current++;
+                continue;
+            }
+            // */
             if(specs[current].positional()){
                 if(specs[current].manditory()){
                     if(specs[current].long_opt() == ""s) continue;
@@ -88,6 +93,7 @@ bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<st
                     res = false;
                 }
             }
+            current++;
         } // while(current < specs.size()) // check the entire spec //
         return res;
     } // if(args.empty()) // deal with empty command line cases //

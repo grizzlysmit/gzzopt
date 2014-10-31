@@ -345,7 +345,7 @@ namespace gzzopts {
               : var(new Func(f)), _description(desc), _long(long_opt), _short(short_opt), _expects_arg(false), _multi(multi), _manditory(manditory), _integer(false), _positional(false), _literal(false), _cut(false), _no_more_opts(false) {
                 //
             };
-            OptionSpec(std::initializer_list<Opts*> opts) : var(new NullVar)/*, _rest(opts)*/ {
+            OptionSpec(std::initializer_list<Opts*> opts) : var(new NullVar), _description(""), _long(""), _short('\0') {
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here" << std::endl;
                 _rest.erase(_rest.begin(), _rest.end());
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here" << std::endl;
