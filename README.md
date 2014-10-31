@@ -3,8 +3,7 @@ This is the start of the gzzopt option parsing library
 
 ##Author: Francis Grizzly Smit##
 
-The library (not a lib yet) is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 6 example programs *calc, calc2, count, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha
-is that *example0* tries to have the command line:
+The library ~~(not a lib yet)~~ [breaking news have now succeed in making a .so Linux dynamic link library out of it will put instruction at the end soon] is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 6 example programs *calc, calc2, count, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
 <pre>
 ...
 ./example0 install &lt;pacakage&gt;...
