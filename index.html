@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Gzzopt : Another option parser writen in C++, I hated the other exaples I&#39;ve seen so I made this it&#39;s small but powerful">
+    <meta name="description" content="Gzzopt : Another option parser writen in C++, I hated the other examples I&#39;ve seen so I made this it&#39;s small but powerful">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/grizzlysmit/gzzopt">View on GitHub</a>
 
           <h1 id="project_title">Gzzopt</h1>
-          <h2 id="project_tagline">Another option parser writen in C++, I hated the other exaples I&#39;ve seen so I made this it&#39;s small but powerful</h2>
+          <h2 id="project_tagline">Another option parser writen in C++, I hated the other examples I&#39;ve seen so I made this it&#39;s small but powerful</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/grizzlysmit/gzzopt/zipball/master">Download this project as a .zip file</a>
@@ -37,8 +37,7 @@
 <h2>
 <a name="author-francis-grizzly-smit" class="anchor" href="#author-francis-grizzly-smit"><span class="octicon octicon-link"></span></a>Author: Francis Grizzly Smit</h2>
 
-<p>The library (not a lib yet) is contained in the files <em>gzzopt.hpp</em> and <em>gzzopt.cpp</em>, there are also 5 example programs <em>calc, calc2, count, example0,</em> and <em>example</em>, <em>example</em> is a complex example of just what complex a set of command lines you can achieve; <em>example0</em> shows how you can go wrong the gotcha
-is that <em>example0</em> tries to have the command line:</p>
+<p>The library is contained in the files <em>gzzopt.hpp</em> and <em>gzzopt.cpp</em>, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 6 example programs <em>calc, calc2, count, empty, example0,</em> and <em>example</em>, <em>example</em> is a complex example of just what complex a set of command lines you can achieve; <em>example0</em> shows how you can go wrong the gotcha is that <em>example0</em> tries to have the command line:</p>
 
 <pre>
 ...
@@ -144,7 +143,7 @@ int main(int argc, char\* argv[]){
         return 0;
     }
 
-    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; s &lt;&lt; " ";
+    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; '`' &lt;&lt; s &lt;&lt; "' ";
     std::cout &lt;&lt; std::endl;
     return 0;
 }
@@ -255,6 +254,25 @@ int main(int argc, char \*argv[]){
 <a name="nb-1" class="anchor" href="#nb-1"><span class="octicon octicon-link"></span></a>NB</h6>
 
 <p>This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.</p>
+
+<h3>
+<a name="making-the-library-a-library" class="anchor" href="#making-the-library-a-library"><span class="octicon octicon-link"></span></a>Making the Library a Library</h3>
+
+<p>To make the library a library on Linux  do this </p>
+
+<pre>
+   <code>g++ -shared -fPIC -o libgzzopt.so gzzopt.o</code> 
+</pre>
+
+<p>I shall look at putting this in the make file when I learn to do plaform specific stuff in a make file.</p>
+
+<p>To make a statically linked library of it under Linux etc al do this</p>
+
+<pre>
+   <code>
+   ar -cvq libgzzopt.a gzzopt.o
+   </code>
+</pre>
       </section>
     </div>
 
