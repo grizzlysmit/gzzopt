@@ -3,7 +3,7 @@ This is the start of the gzzopt option parsing library
 
 ##Author: Francis Grizzly Smit##
 
-The library ~~(not a lib yet)~~ [breaking news have now succeed in making a .so Linux dynamic link library out of it will put instruction at the end soon] is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 6 example programs *calc, calc2, count, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
+The library ~~(not a lib yet)~~ [breaking news have now succeed in making a .so Linux dynamic link library and .a statically linked lib, out of it, see end of this doc] is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, there are also 6 example programs *calc, calc2, count, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
 <pre>
 ...
 ./example0 install &lt;pacakage&gt;...
@@ -214,3 +214,22 @@ int main(int argc, char \*argv[]){
 
 ######NB######
 This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.
+
+
+
+###Making the Library a Library###
+
+To make the library a library on Linux  do this 
+<pre>
+   <code>g++ -shared -fPIC -o libgzzopt.so gzzopt.o</code> 
+</pre>
+
+I shall look at putting this in the make file when I learn to do plaform specific stuff in a make file.
+
+To make a statically linked library of it under Linux etc al do this
+<pre>
+   <code>
+   ar -cvq libgzzopt.a gzzopt.o
+   </code>
+</pre>
+
