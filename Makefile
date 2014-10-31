@@ -13,9 +13,6 @@ CC=g++
 # options I'll pass to the compiler.
 CFLAGS=-c -Wall -std=c++1y
 
-#ifeq ($(UNAME),Linux)
-#	echo Linux
-#endif
 
 all: example example0 calc calc2 count empty libs
 
