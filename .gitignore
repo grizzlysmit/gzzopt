@@ -7,8 +7,12 @@
 #project binarys
 
 *.o
+*.so
+*.a
 calc
 calc2
+calc2_dyn
+calc2_static
 count
 empty
 example

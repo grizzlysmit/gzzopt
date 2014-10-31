@@ -1,10 +1,23 @@
+ifneq (,$(findstring /cygdrive/,$(PATH)))
+    UNAME := Cygwin
+else
+ifneq (,$(findstring WINDOWS,$(PATH)))
+    UNAME := Windows
+else
+    UNAME := $(shell uname -s)
+endif
+endif
 # the compiler to use.
 CC=g++
 #CC=clang++
 # options I'll pass to the compiler.
-CFLAGS=-c -Wall -std=c++1y -g
+CFLAGS=-c -Wall -std=c++1y
 
-all: example example0 calc calc2 count empty
+#ifeq ($(UNAME),Linux)
+#	echo Linux
+#endif
+
+all: example example0 calc calc2 count empty libs
 
 example: gzzopt.o example.o
 	$(CC) gzzopt.o example.o -o example
@@ -44,6 +57,23 @@ count.o: count.cpp
 
 empty.o: empty.cpp
 	$(CC) $(CFLAGS) empty.cpp
+
+libs: static dyn
+
+static: gzzopt.o
+ifeq ($(UNAME),Linux)
+	ar -cvq libgzzopt.a gzzopt.o
+else
+	echo "don't know how to do static libs on $(UNAME)" 
+endif
+
+dyn: gzzopt.o
+ifeq ($(UNAME),Linux)
+	$(CC) -shared -fPIC -o libgzzopt.so gzzopt.o 
+else
+	echo "don't know how to do dynamic libs on $(UNAME)" 
+endif
+	
 
 clean:
 	rm -rf *.o example example0 calc calc2
