@@ -70,8 +70,52 @@ ifeq ($(UNAME),Linux)
 else
 	echo "don't know how to do dynamic libs on $(UNAME)" 
 endif
-	
+
+INSTALL = /usr/bin/install
+CCVERSION = $(shell $(CC) -dumpversion)
+PREFIX = $(DESTDIR)/usr/local
+BINDIR = $(PREFIX)/bin
+SRCDIR = $(PREFIX)/share/gzzopt
+INCLUDEDIR = $(PREFIX)/include/c++/$(CCVERSION)
+LIBDIR = $(PREFIX)/lib
+exe := example example0 calc calc2 count empty
+
+install: all
+	$(INSTALL) -D libgzzopt.a $(LIBDIR)/libgzzopt.a
+	$(INSTALL) -D libgzzopt.so $(LIBDIR)/libgzzopt.so
+	$(INSTALL) -D example $(BINDIR)/example
+	$(INSTALL) -D example0 $(BINDIR)/example0
+	$(INSTALL) -D calc $(BINDIR)/calc
+	$(INSTALL) -D calc2 $(BINDIR)/calc2
+	$(INSTALL) -D count $(BINDIR)/count
+	$(INSTALL) -D empty $(BINDIR)/empty
+	$(INSTALL) -D example.cpp $(SRCDIR)/example.cpp
+	$(INSTALL) -D example0.cpp $(SRCDIR)/example0.cpp
+	$(INSTALL) -D calc.cpp $(SRCDIR)/calc.cpp
+	$(INSTALL) -D calc2.cpp $(SRCDIR)/calc2.cpp
+	$(INSTALL) -D count.cpp $(SRCDIR)/count.cpp
+	$(INSTALL) -D empty.cpp $(SRCDIR)/empty.cpp
+	$(INSTALL) -D gzzopt.hpp $(INCLUDEDIR)/gzzopt.hpp
+
+uninstall:
+	-rm $(LIBDIR)/libgzzopt.a
+	-rm $(LIBDIR)/libgzzopt.so
+	-rm $(BINDIR)/example
+	-rm $(BINDIR)/example0
+	-rm $(BINDIR)/calc
+	-rm $(BINDIR)/calc2
+	-rm $(BINDIR)/count
+	-rm $(BINDIR)/empty
+	-rm $(SRCDIR)/example.cpp
+	-rm $(SRCDIR)/example0.cpp
+	-rm $(SRCDIR)/calc.cpp
+	-rm $(SRCDIR)/calc2.cpp
+	-rm $(SRCDIR)/count.cpp
+	-rm $(SRCDIR)/empty.cpp
+	-rm $(INCLUDEDIR)/gzzopt.hpp
+
+.PHONY: install uninstall
 
 clean:
-	rm -rf *.o example example0 calc calc2
+	rm -rf *.o example example0 calc calc2 count empty
 
