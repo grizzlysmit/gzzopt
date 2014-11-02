@@ -1,44 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Gzzopt : Another option parser writen in C++, I hated the other exaples I&#39;ve seen so I made this it&#39;s small but powerful">
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <title>Gzzopt</title>
+  <meta name="description" content="Another option parser writen in C++, I hated the other examples I&#39;ve seen so I made this it&#39;s small but powerful">
 
-    <title>Gzzopt</title>
-  </head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <body>
+</head>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/grizzlysmit/gzzopt">View on GitHub</a>
+<body>
 
-          <h1 id="project_title">Gzzopt</h1>
-          <h2 id="project_tagline">Another option parser writen in C++, I hated the other exaples I&#39;ve seen so I made this it&#39;s small but powerful</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/grizzlysmit/gzzopt/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/grizzlysmit/gzzopt/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Gzzopt</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Another option parser writen in C++, I hated the other examples I&#39;ve seen so I made this it&#39;s small but powerful</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/grizzlysmit/gzzopt/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/grizzlysmit/gzzopt/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/grizzlysmit/gzzopt" class="code">View Gzzopt on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
 <a name="this-is-the-start-of-the-gzzopt-option-parsing-library" class="anchor" href="#this-is-the-start-of-the-gzzopt-option-parsing-library"><span class="octicon octicon-link"></span></a>This is the start of the gzzopt option parsing library</h1>
 
 <h2>
 <a name="author-francis-grizzly-smit" class="anchor" href="#author-francis-grizzly-smit"><span class="octicon octicon-link"></span></a>Author: Francis Grizzly Smit</h2>
 
-<p>The library (not a lib yet) is contained in the files <em>gzzopt.hpp</em> and <em>gzzopt.cpp</em>, there are also 5 example programs <em>calc, calc2, count, example0,</em> and <em>example</em>, <em>example</em> is a complex example of just what complex a set of command lines you can achieve; <em>example0</em> shows how you can go wrong the gotcha
-is that <em>example0</em> tries to have the command line:</p>
+<p>The library is contained in the files <em>gzzopt.hpp</em> and <em>gzzopt.cpp</em>, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 6 example programs <em>calc, calc2, count, empty, example0,</em> and <em>example</em>, <em>example</em> is a complex example of just what complex a set of command lines you can achieve; <em>example0</em> shows how you can go wrong the gotcha is that <em>example0</em> tries to have the command line:</p>
 
 <pre>
 ...
@@ -144,7 +148,7 @@ int main(int argc, char\* argv[]){
         return 0;
     }
 
-    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; s &lt;&lt; " ";
+    for(int i = 0; i &lt; cnt; i++) std::cout &lt;&lt; '`' &lt;&lt; s &lt;&lt; "' ";
     std::cout &lt;&lt; std::endl;
     return 0;
 }
@@ -255,18 +259,45 @@ int main(int argc, char \*argv[]){
 <a name="nb-1" class="anchor" href="#nb-1"><span class="octicon octicon-link"></span></a>NB</h6>
 
 <p>This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.</p>
-      </section>
+
+<h3>
+<a name="making-the-library-a-library" class="anchor" href="#making-the-library-a-library"><span class="octicon octicon-link"></span></a>Making the Library a Library</h3>
+
+<p>To make the library a library on Linux  do this </p>
+
+<pre>
+   <code>g++ -shared -fPIC -o libgzzopt.so gzzopt.o</code> 
+</pre>
+
+<p>I shall look at putting this in the make file when I learn to do plaform specific stuff in a make file.</p>
+
+<p>To make a statically linked library of it under Linux etc al do this</p>
+
+<pre>
+   <code>
+   ar -cvq libgzzopt.a gzzopt.o
+   </code>
+</pre>
+        </article>
+      </div>
     </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/grizzlysmit" class="avatar"><img src="https://avatars0.githubusercontent.com/u/9037046?v=2&amp;s=60" width="48" height="48"></a> <a href="https://github.com/grizzlysmit">grizzlysmit</a> maintains <a href="https://github.com/grizzlysmit/gzzopt">Gzzopt</a></p>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Gzzopt maintained by <a href="https://github.com/grizzlysmit">grizzlysmit</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
 
-    
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="http://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/grizzlysmit/gzzopt/tarball/master" class="tar">tar</a><a href="https://github.com/grizzlysmit/gzzopt/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
 
-  </body>
+  
+</body>
 </html>
