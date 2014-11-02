@@ -1,5 +1,5 @@
-This is the start of the gzzopt option parsing library
-======================================================
+This is the gzzopt option parsing library
+=========================================
 
 ##Author: Francis Grizzly Smit##
 
