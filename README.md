@@ -225,7 +225,7 @@ int main(int argc, char \*argv[]){
 
 ###### See Also: ######
 
-*calc.cpp* and *calc2.cpp* for a full example; and *example.cpp* for an example of how convoluted you can get. And *example0.cpp* for an example of a flawed spec reread above for why it's flawed.
+*calc.cpp* and *calc2.cpp* for a full example; and *example.cpp* for an example of how convoluted you can get. And *example0.cpp* for an example of a flawed spec reread above for why it's flawed. Also *count.cpp*, and *empty.cpp* and fianlly [bad.cpp](#bad) for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.
 
 
 ###### NB ######
