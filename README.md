@@ -24,7 +24,7 @@ Author: Francis Grizzly Smit
 
 The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 7 example programs *calc, calc2, count, bad, empty, example0,* and *example*.
 
-### Example and Example2 ###
+### Example and Example0 ###
 
 *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
 <pre>
@@ -261,7 +261,7 @@ The program bad **bad.cpp** is an example of a bad option to wit a ? for the sho
 
 ### See Also: ###
 
-*calc.cpp* and *calc2.cpp* for a full example; and *example.cpp* for an example of how convoluted you can get. And *example0.cpp* for an example of a flawed spec reread above for why it's flawed. Also *count.cpp*, and *empty.cpp* and fianlly [bad.cpp](#bad) for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.
+[calc.cpp and cacl2.cpp](#calc-and-calc2) for a full example; and [example.cpp](#example-and-example0) for an example of how convoluted you can get. And [example0.cpp](#example-and-example0) for an example of a flawed spec reread above for why it's flawed. Also [count.cpp](#count), and [empty.cpp](#empty) and fianlly [bad.cpp](#bad) for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.
 
 
 ###### NB ######
