@@ -62,6 +62,7 @@ bool gzzopts::OptionSpec::good() const {
         std::regex_match(_long, result, option_long);
         if(result.empty()){
             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\t_long == " << _long << std::endl;
+            std::cerr << "Error:\tBad long opt value: " << _long << std::endl;
             return false; // no match //
         }
     }
@@ -70,6 +71,7 @@ bool gzzopts::OptionSpec::good() const {
         std::regex_match(""s + _short, result2, option_long);
         if(result2.empty()){
             //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+            std::cerr << "Error:\tBad short opt value: " << _short << std::endl;
             return false; // no match //
         }
     }
