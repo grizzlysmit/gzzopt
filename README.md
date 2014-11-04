@@ -7,11 +7,14 @@ Author: Francis Grizzly Smit
 ## Contents
 
 - [Introduction](#introduction)
-- [Count.cpp](#count)
+- [example.cpp and example0.cpp](#example-and-example0)
+- [calc.cpp and cacl2.cpp](#calc-and-calc2)
+- [count.cpp](#count)
     - [A brief explanation of the format of a program using gxxopts](#a-brief-explanation-of-the-format-of-a-program-using-gxxopts)
 - [Making the Library a Library](#making-the-library-a-library)
-    - [See Also](#see-also)
-- [Bad.cpp](#bad)
+- [empty.cpp](#empty)
+- [bad.cpp](#bad)
+- [See Also](#see-also)
 
 <!-- end toc -->
 
@@ -19,7 +22,11 @@ Author: Francis Grizzly Smit
 
 ### Introduction ###
 
-The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 7 example programs *calc, calc2, count, bad, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
+The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 7 example programs *calc, calc2, count, bad, empty, example0,* and *example*.
+
+### Example and Example2 ###
+
+*example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
 <pre>
 ...
 ./example0 install &lt;pacakage&gt;...
@@ -33,7 +40,11 @@ the problem is *install* shadows *info* and info is treated as a package argumen
 ./example info &lt;pacakage&gt;...
 </pre>
 
-This works fine, try each; *calc* and *calc2* are the same as each other, except for how there arguments are specified, to wit:
+This works fine, try each.
+
+### Calc and Calc2 ###
+
+*calc* and *calc2* are the same as each other, except for how there arguments are specified, to wit:
 <pre>
 21:26:00 grizzlysmit@rakbat:~/Projects/C++/gzzoption$ ./calc --help
 ./calc --help|-h
@@ -223,14 +234,6 @@ int main(int argc, char \*argv[]){
 
 
 
-###### See Also: ######
-
-*calc.cpp* and *calc2.cpp* for a full example; and *example.cpp* for an example of how convoluted you can get. And *example0.cpp* for an example of a flawed spec reread above for why it's flawed. Also *count.cpp*, and *empty.cpp* and fianlly [bad.cpp](#bad) for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.
-
-
-###### NB ######
-This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.
-
 
 
 ### Making the Library a Library ###
@@ -249,5 +252,18 @@ To make a statically linked library of it under Linux etc al do this
    </code>
 </pre>
 
+### Empty ###
+The **empty.cpp** program shows how to have a program that allows an empty argument set (most of the others here delibrately mmake that an error).
+
 ### Bad ###
 The program bad **bad.cpp** is an example of a bad option to wit a ? for the short option this is picked up by the good() method.
+
+
+### See Also: ###
+
+*calc.cpp* and *calc2.cpp* for a full example; and *example.cpp* for an example of how convoluted you can get. And *example0.cpp* for an example of a flawed spec reread above for why it's flawed. Also *count.cpp*, and *empty.cpp* and fianlly [bad.cpp](#bad) for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.
+
+
+###### NB ######
+This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.
+
