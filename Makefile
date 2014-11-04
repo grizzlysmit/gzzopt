@@ -101,6 +101,9 @@ install: all
 	$(INSTALL) -D calc2.cpp $(SRCDIR)/calc2.cpp
 	$(INSTALL) -D count.cpp $(SRCDIR)/count.cpp
 	$(INSTALL) -D empty.cpp $(SRCDIR)/empty.cpp
+	$(INSTALL) -D bad.cpp $(SRCDIR)/bad.cpp
+	$(INSTALL) -D Makefile $(SRCDIR)/Makefile
+	$(INSTALL) -D gzzopt.hpp $(SRCDIR)/gzzopt.hpp
 	$(INSTALL) -D gzzopt.hpp $(INCLUDEDIR)/gzzopt.hpp
 
 uninstall:
@@ -118,6 +121,9 @@ uninstall:
 	-rm $(SRCDIR)/calc2.cpp
 	-rm $(SRCDIR)/count.cpp
 	-rm $(SRCDIR)/empty.cpp
+	-rm $(SRCDIR)/bad.cpp
+	-rm $(SRCDIR)/Makefile
+	-rm $(SRCDIR)/gzzopt.hpp
 	-rm $(INCLUDEDIR)/gzzopt.hpp
 
 .PHONY: install uninstall

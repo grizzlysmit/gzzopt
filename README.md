@@ -252,6 +252,9 @@ To make a statically linked library of it under Linux etc al do this
    </code>
 </pre>
 
+#### NB ####
+The make file **Makefile** now makes the libraries, for you. and installs them.
+
 ### Empty ###
 The **empty.cpp** program shows how to have a program that allows an empty argument set (most of the others here delibrately mmake that an error).
 
