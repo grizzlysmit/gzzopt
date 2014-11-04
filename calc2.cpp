@@ -106,6 +106,10 @@ int main(int argc, char *argv[]){
     //*/
 
     OptionParser p(argc, argv, opt);
+    if(!p.good()){
+        std::cerr << "Error: bad opt spec" << std::endl;
+        return 2;
+    }
 
     // compact the usage messages generated //
 

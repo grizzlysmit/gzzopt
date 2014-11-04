@@ -53,11 +53,34 @@ gzzopts::OptionSpec gzzopts::literal(function_str f, const std::string desc, con
     return OptionSpec(f, desc, name, '\0', false).set_positional(true).set_manditory(true).set_literal(true).set_cut(true);
 };
 
+bool gzzopts::OptionSpec::good() const {
+    using namespace std;
+    std::regex option_long("^([[:alpha:]][-_[:alpha:]]*)$");
+    std::smatch result;
+    //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+    if(_long != ""s){
+        std::regex_match(_long, result, option_long);
+        if(result.empty()){
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\t_long == " << _long << std::endl;
+            return false; // no match //
+        }
+    }
+    std::smatch result2;
+    if(_short){
+        std::regex_match(""s + _short, result2, option_long);
+        if(result2.empty()){
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+            return false; // no match //
+        }
+    }
+    return true;
+}
+
 bool gzzopts::Opts::parse(OptionParser* op, std::string progname, std::vector<std::string> args, std::vector<std::string>::size_type& i, bool no_more_opts, bool inner, const int depth){
     using namespace std;
     //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here:\tinner == " << std::boolalpha << inner << std::endl;
     
-    std::regex option_matcher("^--([[:alpha:]][-_[:alpha:]]+)(=(.*))?$|^-([a-zA-Z]+)$");
+    std::regex option_matcher("^--([[:alpha:]][-_[:alpha:]]*)(=(.*))?$|^-([a-zA-Z]+)$");
 
     std::vector<std::tuple<std::vector<std::string>::size_type, std::vector<OptionSpec>::size_type>> backtrace;
 
@@ -713,6 +736,26 @@ bool gzzopts::DISCRIBEUSAGE(const Opts opts, const bool seg_desc, const bool com
     std::cerr << std::endl;
     return true;
 }
+
+bool gzzopts::Opts::good() const {
+    std::vector<std::vector<OptionSpec>::size_type> backtrace;
+    for(std::vector<OptionSpec>::size_type i = 0; i < specs.size(); i++){
+        if(specs[i].rest().size() > 0){
+            backtrace.insert(backtrace.begin(), i);
+        }
+        if(specs[i].is_novar()) continue;
+        if(!specs[i].good()) return false;
+    } // for(std::vector<OptionSpec>::size_type i = 0; i < specs.size(); i++) //
+    if(backtrace.size() > 0){
+        for(auto i : backtrace){
+            //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here" << std::endl;
+            for(Opts* o : specs[i].rest()){
+                if(!o->good()) return false;
+            }
+        }
+    }
+    return true;
+} // bool gzzopts::Opts::good() const //
 
 bool gzzopts::Opts::usage(std::string progname) const {
     std::ostringstream os;

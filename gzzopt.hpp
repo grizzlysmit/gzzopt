@@ -368,6 +368,7 @@ namespace gzzopts {
                 //std::cerr << __FILE__ << "[" << __LINE__ << "] got here: var == " << var << "  _long == " << _long << std::endl;
                 return _long;
             };
+            bool good() const;
             const char short_opt() const { return _short; };
             const bool expects_arg() const { return _expects_arg; };
             OptionSpec& set_expects_arg(const bool expects) { _expects_arg = expects; return *this; };
@@ -435,6 +436,7 @@ namespace gzzopts {
         public:
             bool usage(std::string progname) const;
             bool discribeusage(str_pair_vec& out, std::string::size_type &width, const bool seg_desc, const bool compact) const;
+            bool good() const;
         protected:
             bool findit(str_pair_vec out, std::string opt_spec, std::string opt_desc) const;
     }; // class Opts //
@@ -488,5 +490,6 @@ namespace gzzopts {
         public:
             const bool compact() const { return _compact; };
             void set_compact(bool comp) { _compact = comp; };
+            bool good() const { return opts.good(); };
     }; // class OptionParser //
 } // namespace gzzopts //
