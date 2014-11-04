@@ -37,12 +37,42 @@
         </div>
         <article class="markdown-body">
           <h1>
-<a name="this-is-the-gzzopt-option-parsing-library" class="anchor" href="#this-is-the-gzzopt-option-parsing-library"><span class="octicon octicon-link"></span></a>This is the gzzopt option parsing library</h1>
+<a id="this-is-the-gzzopt-option-parsing-library" class="anchor" href="#this-is-the-gzzopt-option-parsing-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>This is the gzzopt option parsing library</h1>
 
 <h2>
-<a name="author-francis-grizzly-smit" class="anchor" href="#author-francis-grizzly-smit"><span class="octicon octicon-link"></span></a>Author: Francis Grizzly Smit</h2>
+<a id="author-francis-grizzly-smit" class="anchor" href="#author-francis-grizzly-smit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author: Francis Grizzly Smit</h2>
 
-<p>The library is contained in the files <em>gzzopt.hpp</em> and <em>gzzopt.cpp</em>, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 6 example programs <em>calc, calc2, count, empty, example0,</em> and <em>example</em>, <em>example</em> is a complex example of just what complex a set of command lines you can achieve; <em>example0</em> shows how you can go wrong the gotcha is that <em>example0</em> tries to have the command line:</p>
+<h2>
+<a id="contents" class="anchor" href="#contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents</h2>
+
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#example-and-example0">example.cpp and example0.cpp</a></li>
+<li><a href="#calc-and-calc2">calc.cpp and cacl2.cpp</a></li>
+<li>
+<a href="#count">count.cpp</a>
+
+<ul>
+<li><a href="#a-brief-explanation-of-the-format-of-a-program-using-gxxopts">A brief explanation of the format of a program using gxxopts</a></li>
+</ul>
+</li>
+<li><a href="#making-the-library-a-library">Making the Library a Library</a></li>
+<li><a href="#empty">empty.cpp</a></li>
+<li><a href="#bad">bad.cpp</a></li>
+<li><a href="#see-also">See Also</a></li>
+</ul>
+
+
+
+<h3>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>The library is contained in the files <em>gzzopt.hpp</em> and <em>gzzopt.cpp</em>, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 7 example programs <em>calc, calc2, count, bad, empty, example0,</em> and <em>example</em>.</p>
+
+<h3>
+<a id="example-and-example0" class="anchor" href="#example-and-example0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example and Example0</h3>
+
+<p><em>example</em> is a complex example of just what complex a set of command lines you can achieve; <em>example0</em> shows how you can go wrong the gotcha is that <em>example0</em> tries to have the command line:</p>
 
 <pre>
 ...
@@ -58,7 +88,12 @@
 ./example info &lt;pacakage&gt;...
 </pre>
 
-<p>This works fine, try each; <em>calc</em> and <em>calc2</em> are the same as each other, except for how there arguments are specified, to wit:</p>
+<p>This works fine, try each.</p>
+
+<h3>
+<a id="calc-and-calc2" class="anchor" href="#calc-and-calc2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calc and Calc2</h3>
+
+<p><em>calc</em> and <em>calc2</em> are the same as each other, except for how there arguments are specified, to wit:</p>
 
 <pre>
 21:26:00 grizzlysmit@rakbat:~/Projects/C++/gzzoption$ ./calc --help
@@ -109,7 +144,7 @@ where:
 All of the programs correspond to a <em>.cpp</em> file see the <em>Makefile</em> for details.</p>
 
 <h3>
-<a name="count" class="anchor" href="#count"><span class="octicon octicon-link"></span></a>Count</h3>
+<a id="count" class="anchor" href="#count" aria-hidden="true"><span class="octicon octicon-link"></span></a>Count</h3>
 
 <p><em>count</em> shows a simple example of an incrementing integer option see <em>count.cpp</em>, this is done with an incrementing function, this is the best solution for this problem, I could do it by adding still more helper classes and special constructors and it gets progressively more ugly, so I bailed for something which will have fewer problems, and I think is an eloquent solution. see code below, or read <em>count.cpp</em>:</p>
 
@@ -156,12 +191,12 @@ int main(int argc, char\* argv[]){
 </pre>
 
 <h6>
-<a name="nb" class="anchor" href="#nb"><span class="octicon octicon-link"></span></a>NB</h6>
+<a id="nb" class="anchor" href="#nb" aria-hidden="true"><span class="octicon octicon-link"></span></a>NB</h6>
 
 <p>Have to use <em>strvalue</em> to allow arbitary strings, should just been a variant of <em>positional</em> but my compiler goes to the <strong>template</strong> version instead. :P</p>
 
 <h4>
-<a name="a-brief-explanation-of-the-format-of-a-program-using-gxxopts" class="anchor" href="#a-brief-explanation-of-the-format-of-a-program-using-gxxopts"><span class="octicon octicon-link"></span></a>A brief explanation of the format of a program using gxxopts</h4>
+<a id="a-brief-explanation-of-the-format-of-a-program-using-gxxopts" class="anchor" href="#a-brief-explanation-of-the-format-of-a-program-using-gxxopts" aria-hidden="true"><span class="octicon octicon-link"></span></a>A brief explanation of the format of a program using gxxopts</h4>
 
 <p>The format of a program is as follows in <code>main(int argc, char *argv[])</code> or similar, define one or more Opt objects, the elements of the Opt object are OptionSpec objects, these can be entered directly or via the convenience functions <em>positionnal</em> and <em>literal</em> which produce OptionSpec objects with extra options turned on a <em>positional</em> is just a positional argument, and a <em>literal</em> is a literal string to expect, in addition OptionSpec has a initializer_list constructor <code>OptionSpec(std::initializer_list&lt;Opts*&gt; opts)</code> which take a list of pointers to Opt objects (had to be pointers as Opts is an incomplete type at the time) so you can produce tree like structures. The constructor for Opt itself is a initializer_list <code>Opts(std::initializer_list&lt;OptionSpec&gt; lst)</code> so you can specify arbitrarily many elements.</p>
 
@@ -250,18 +285,8 @@ int main(int argc, char \*argv[]){
    </code>
 </pre>
 
-<h6>
-<a name="see-also" class="anchor" href="#see-also"><span class="octicon octicon-link"></span></a>See Also:</h6>
-
-<p><em>calc.cpp</em> and <em>calc2.cpp</em> for a full example; and <em>example.cpp</em> for an example of how convoluted you can get. And <em>example0.cpp</em> for an example of a flawed spec reread above for why it's flawed.</p>
-
-<h6>
-<a name="nb-1" class="anchor" href="#nb-1"><span class="octicon octicon-link"></span></a>NB</h6>
-
-<p>This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.</p>
-
 <h3>
-<a name="making-the-library-a-library" class="anchor" href="#making-the-library-a-library"><span class="octicon octicon-link"></span></a>Making the Library a Library</h3>
+<a id="making-the-library-a-library" class="anchor" href="#making-the-library-a-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making the Library a Library</h3>
 
 <p>To make the library a library on Linux  do this </p>
 
@@ -278,6 +303,31 @@ int main(int argc, char \*argv[]){
    ar -cvq libgzzopt.a gzzopt.o
    </code>
 </pre>
+
+<h4>
+<a id="nb-1" class="anchor" href="#nb-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>NB</h4>
+
+<p>The make file <strong>Makefile</strong> now makes the libraries, for you. and installs them.</p>
+
+<h3>
+<a id="empty" class="anchor" href="#empty" aria-hidden="true"><span class="octicon octicon-link"></span></a>Empty</h3>
+
+<p>The <strong>empty.cpp</strong> program shows how to have a program that allows an empty argument set (most of the others here delibrately mmake that an error).</p>
+
+<h3>
+<a id="bad" class="anchor" href="#bad" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bad</h3>
+
+<p>The program bad <strong>bad.cpp</strong> is an example of a bad option to wit a ? for the short option this is picked up by the good() method.</p>
+
+<h3>
+<a id="see-also" class="anchor" href="#see-also" aria-hidden="true"><span class="octicon octicon-link"></span></a>See Also:</h3>
+
+<p><a href="#calc-and-calc2">calc.cpp and cacl2.cpp</a> for a full example; and <a href="#example-and-example0">example.cpp</a> for an example of how convoluted you can get. And <a href="#example-and-example0">example0.cpp</a> for an example of a flawed spec reread above for why it's flawed. Also <a href="#count">count.cpp</a>, and <a href="#empty">empty.cpp</a> and fianlly <a href="#bad">bad.cpp</a> for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.</p>
+
+<h6>
+<a id="nb-2" class="anchor" href="#nb-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>NB</h6>
+
+<p>This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.</p>
         </article>
       </div>
     </div>
