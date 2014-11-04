@@ -3,7 +3,11 @@ This is the gzzopt option parsing library
 
 ##Author: Francis Grizzly Smit##
 
-The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 6 example programs *calc, calc2, count, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
+{:toc}
+
+###Introduction###
+
+The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 7 example programs *calc, calc2, count, bad, empty, example0,* and *example*, *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
 <pre>
 ...
 ./example0 install &lt;pacakage&gt;...
@@ -233,3 +237,5 @@ To make a statically linked library of it under Linux etc al do this
    </code>
 </pre>
 
+###Bad###
+The program bad **bad.cpp** is an example of a bad option to wit a ? for the short option this is picked up by the good() method.
