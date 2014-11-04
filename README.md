@@ -7,9 +7,10 @@ Author: Francis Grizzly Smit
 ## Contents
 
 - [Introduction](#introduction)
-- [Count](#count)
+- [Count.cpp](#count)
     - [A brief explanation of the format of a program using gxxopts](#a-brief-explanation-of-the-format-of-a-program-using-gxxopts)
 - [Making the Library a Library](#making-the-library-a-library)
+    - [See Also](#see-also)
 - [Bad.cpp](#bad)
 
 <!-- end toc -->
