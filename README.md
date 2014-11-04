@@ -3,7 +3,16 @@ This is the gzzopt option parsing library
 
 ##Author: Francis Grizzly Smit##
 
-{:toc}
+## Contents
+
+- [Author: Francis Grizzly Smit##](#uthor-francis-grizzly-smit)
+    - [Introduction###](#ntroduction)
+    - [Count###](#ount)
+    - [Making the Library a Library###](#aking-the-library-a-library)
+    - [Bad###](#ad)
+
+<!-- end toc -->
+
 
 ###Introduction###
 
