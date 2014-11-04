@@ -14,7 +14,7 @@ CC=g++
 CFLAGS=-c -Wall -std=c++1y
 
 
-all: example example0 calc calc2 count empty libs
+all: example example0 calc calc2 count empty libs bad
 
 example: gzzopt.o example.o
 	$(CC) gzzopt.o example.o -o example
@@ -33,6 +33,9 @@ count: gzzopt.o count.o
 
 empty: gzzopt.o empty.o
 	$(CC) gzzopt.o empty.o -o empty
+
+bad: gzzopt.o bad.o
+	$(CC) gzzopt.o bad.o -o bad
 
 gzzopt.o: gzzopt.cpp gzzopt.hpp
 	$(CC) $(CFLAGS) gzzopt.cpp
@@ -54,6 +57,9 @@ count.o: count.cpp
 
 empty.o: empty.cpp
 	$(CC) $(CFLAGS) empty.cpp
+
+bad.o: bad.cpp
+	$(CC) $(CFLAGS) bad.cpp
 
 libs: libgzzopt.a libgzzopt.so
 
