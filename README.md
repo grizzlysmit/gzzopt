@@ -267,6 +267,6 @@ The program bad **bad.cpp** is an example of a bad option to wit a ? for the sho
 [calc.cpp and cacl2.cpp](#calc-and-calc2) for a full example; and [example.cpp](#example-and-example0) for an example of how convoluted you can get. And [example0.cpp](#example-and-example0) for an example of a flawed spec reread above for why it's flawed. Also [count.cpp](#count), and [empty.cpp](#empty) and fianlly [bad.cpp](#bad) for an exaple of catching a bad option spec, note this only catches bad char specs not other errors.
 
 
-###### NB ######
+#### NB ####
 This code was compiled with the -std=c++1y option to the g++ compiler as I use some of the more recent features of the C++ Programming language.
 
