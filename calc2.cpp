@@ -130,9 +130,9 @@ int main(int argc, char *argv[]){
         return 0;
     }
     //std::cout << "quiet == " << std::boolalpha << quiet << std::endl;
-    //std::cout << "opp == " << std::boolalpha << to_str(opp) << std::endl;
-    //std::cout << "x == " << std::boolalpha << x << std::endl;
-    //std::cout << "y == " << std::boolalpha << y << std::endl;
+    //std::cout << "opp == " << to_str(opp) << std::endl;
+    //std::cout << "x == " << x << std::endl;
+    //std::cout << "y == " << y << std::endl;
     switch(opp){
         case(Opp::none):
             std::cout << "nothing to do" << std::endl;
@@ -163,4 +163,5 @@ int main(int argc, char *argv[]){
     }
     return 0;
 }
+
 
