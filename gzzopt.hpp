@@ -87,8 +87,12 @@ namespace gzzopts {
             virtual bool set_value(const std::string& val){
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here\tval == " << val << std::endl;
                 if(!var) throw NoVaribleProvided("No Variable provided");
-                *var = val;
-                is_set = true;
+                if(!is_set){
+                    *var = val;
+                    is_set = true;
+                }else{
+                    *var += val;
+                }
                 //std::cerr << __FILE__ << '[' << __LINE__ << "]\tgot here\tis.eof() == " << is.eof() << std::endl;
                 return true;
             };
