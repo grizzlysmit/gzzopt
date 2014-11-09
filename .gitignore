@@ -18,3 +18,8 @@ empty
 example
 example0
 bad
+
+#checkinstall stuff
+*.tgz
+description-pak
+doc-pak
