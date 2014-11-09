@@ -111,17 +111,17 @@ int main(int argc, char *argv[]){
     std::vector<double> v;
     function_str verb = [&quiet](const std::string& val) -> bool { quiet = false; return !quiet; };
     Opts opt2{literal([&opp2](const std::string& n) -> bool { return set_opp2(opp2, n); }, "echo or ls all args", "echo|ls").set_no_more_opts(true),
-              positional(l, "a list of strings", "l"),
+              strlist(l, "a list of strings", "l"),
                 };
     Opts opt3{literal([&lst]() -> bool { return lst = true; }, "list all args", "list"),
               positional(v, "a list of doubles", "v").set_manditory(true),
                 };
     Opts opt5{literal(info, "get install info", "info").set_no_more_opts(true),
-              positional(l, "a list of packages to get info on", "pacakage").set_manditory(true),
+              strlist(l, "a list of packages to get info on", "pacakage").set_manditory(true),
                 };
     Opts opt4{OptionSpec{&opt5, },
               literal(install, "install somestuff", "install").set_no_more_opts(true),
-              positional(l, "a list of packages to install", "pacakage").set_manditory(true),
+              strlist(l, "a list of packages to install", "pacakage").set_manditory(true),
                 };
     Opts opt1{ OptionSpec(file, "File", "file", 'f').set_expects_arg(true), 
                       OptionSpec(verb, "proceed verbosely", "verbose", 'v' ), 
