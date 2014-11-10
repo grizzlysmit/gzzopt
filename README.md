@@ -10,7 +10,7 @@ Author: Francis Grizzly Smit
 - [example.cpp and example0.cpp](#example-and-example0)
 - [calc.cpp and cacl2.cpp](#calc-and-calc2)
 - [count.cpp](#count)
-    - [A brief explanation of the format of a program using gxxopts](#a-brief-explanation-of-the-format-of-a-program-using-gxxopts)
+- [A brief explanation of the format of a program using gxxopts](#a-brief-explanation-of-the-format-of-a-program-using-gxxopts)
 - [Making the Library a Library](#making-the-library-a-library)
 - [empty.cpp](#empty)
 - [bad.cpp](#bad)
@@ -144,7 +144,7 @@ int main(int argc, char\* argv[]){
 Have to use *strvalue* to allow arbitary strings, should just been a variant of *positional* but my compiler goes to the **template** version instead. :P
 
 
-#### A brief explanation of the format of a program using gxxopts ####
+### A brief explanation of the format of a program using gxxopts ###
 
 The format of a program is as follows in <code>main(int argc, char \*argv[])</code> or similar, define one or more Opt objects, the elements of the Opt object are OptionSpec objects, these can be entered directly or via the convenience functions *positionnal* and *literal* which produce OptionSpec objects with extra options turned on a *positional* is just a positional argument, and a *literal* is a literal string to expect, in addition OptionSpec has a initializer\_list constructor <code>OptionSpec(std::initializer\_list&lt;Opts\*&gt; opts)</code> which take a list of pointers to Opt objects (had to be pointers as Opts is an incomplete type at the time) so you can produce tree like structures. The constructor for Opt itself is a initializer\_list <code>Opts(std::initializer\_list&lt;OptionSpec&gt; lst)</code> so you can specify arbitrarily many elements.
 
