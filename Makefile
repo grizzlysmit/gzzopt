@@ -105,7 +105,7 @@ install: all
 	$(INSTALL) -D example0.cpp $(SRCDIR)/example0.cpp
 	$(INSTALL) -D calc.cpp $(SRCDIR)/calc.cpp
 	$(INSTALL) -D calc2.cpp $(SRCDIR)/calc2.cpp
-	$(INSTALL) -D count.cpp $(SRCDIR)/count.cpp
+	$(INSTALL) -D count.cpp $(SRCDIR)/count.cppgzzoption_20141110-2_i386.deb
 	$(INSTALL) -D empty.cpp $(SRCDIR)/empty.cpp
 	$(INSTALL) -D bad.cpp $(SRCDIR)/bad.cpp
 	$(INSTALL) -D vect.cpp $(SRCDIR)/vect.cpp
@@ -139,5 +139,5 @@ uninstall:
 .PHONY: install uninstall
 
 clean:
-	rm -rf *.o example example0 calc calc2 count empty
+	rm -rf *.o libgzzopt.so libgzzopt.a example example0 calc calc2 count empty bad vect 
 
