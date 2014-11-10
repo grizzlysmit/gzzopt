@@ -105,7 +105,7 @@ install: all
 	$(INSTALL) -D example0.cpp $(SRCDIR)/example0.cpp
 	$(INSTALL) -D calc.cpp $(SRCDIR)/calc.cpp
 	$(INSTALL) -D calc2.cpp $(SRCDIR)/calc2.cpp
-	$(INSTALL) -D count.cpp $(SRCDIR)/count.cppgzzoption_20141110-2_i386.deb
+	$(INSTALL) -D count.cpp $(SRCDIR)/count.cpp
 	$(INSTALL) -D empty.cpp $(SRCDIR)/empty.cpp
 	$(INSTALL) -D bad.cpp $(SRCDIR)/bad.cpp
 	$(INSTALL) -D vect.cpp $(SRCDIR)/vect.cpp
