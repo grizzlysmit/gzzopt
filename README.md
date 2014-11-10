@@ -14,6 +14,7 @@ Author: Francis Grizzly Smit
 - [Making the Library a Library](#making-the-library-a-library)
 - [empty.cpp](#empty)
 - [bad.cpp](#bad)
+- [vect.cpp](#vect)
 - [See Also](#see-also)
 
 <!-- end toc -->
@@ -22,7 +23,7 @@ Author: Francis Grizzly Smit
 
 ### Introduction ###
 
-The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 7 example programs *calc, calc2, count, bad, empty, example0,* and *example*.
+The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 8 example programs *calc, calc2, count, bad, vect, empty, example0,* and *example*.
 
 ### Example and Example0 ###
 
@@ -261,6 +262,8 @@ The **empty.cpp** program shows how to have a program that allows an empty argum
 ### Bad ###
 The program bad **bad.cpp** is an example of a bad option to wit a ? for the short option this is picked up by the good() method.
 
+### Vect ###
+The **vect.cpp** program is just the **example.cpp** reworked to use **StrVect** i.e. *string vector vect* in place of the *string list l*.
 
 ### See Also: ###
 
