@@ -110,6 +110,7 @@ install: all
 	$(INSTALL) -D bad.cpp $(SRCDIR)/bad.cpp
 	$(INSTALL) -D vect.cpp $(SRCDIR)/vect.cpp
 	$(INSTALL) -D Makefile $(SRCDIR)/Makefile
+	$(INSTALL) -D README.md $(SRCDIR)/README.md
 	$(INSTALL) -D gzzopt.hpp $(SRCDIR)/gzzopt.hpp
 	$(INSTALL) -D gzzopt.hpp $(INCLUDEDIR)/gzzopt.hpp
 
@@ -131,6 +132,7 @@ uninstall:
 	-rm $(SRCDIR)/bad.cpp
 	-rm $(SRCDIR)/vect.cpp
 	-rm $(SRCDIR)/Makefile
+	-rm $(SRCDIR)/README.md
 	-rm $(SRCDIR)/gzzopt.hpp
 	-rm $(INCLUDEDIR)/gzzopt.hpp
 
