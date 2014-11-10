@@ -14,7 +14,7 @@ CC=g++
 CFLAGS=-c -Wall -std=c++1y
 
 
-all: example example0 calc calc2 count empty libs bad
+all: example example0 calc calc2 count empty libs bad vect
 
 example: gzzopt.o example.o
 	$(CC) gzzopt.o example.o -o example
@@ -36,6 +36,9 @@ empty: gzzopt.o empty.o
 
 bad: gzzopt.o bad.o
 	$(CC) gzzopt.o bad.o -o bad
+
+vect: gzzopt.o vect.o
+	$(CC) gzzopt.o vect.o -o vect
 
 gzzopt.o: gzzopt.cpp gzzopt.hpp
 	$(CC) $(CFLAGS) gzzopt.cpp
@@ -60,6 +63,9 @@ empty.o: empty.cpp
 
 bad.o: bad.cpp
 	$(CC) $(CFLAGS) bad.cpp
+
+vect.o: vect.cpp
+	$(CC) $(CFLAGS) vect.cpp
 
 libs: libgzzopt.a libgzzopt.so
 
@@ -102,6 +108,7 @@ install: all
 	$(INSTALL) -D count.cpp $(SRCDIR)/count.cpp
 	$(INSTALL) -D empty.cpp $(SRCDIR)/empty.cpp
 	$(INSTALL) -D bad.cpp $(SRCDIR)/bad.cpp
+	$(INSTALL) -D vect.cpp $(SRCDIR)/vect.cpp
 	$(INSTALL) -D Makefile $(SRCDIR)/Makefile
 	$(INSTALL) -D gzzopt.hpp $(SRCDIR)/gzzopt.hpp
 	$(INSTALL) -D gzzopt.hpp $(INCLUDEDIR)/gzzopt.hpp
@@ -122,6 +129,7 @@ uninstall:
 	-rm $(SRCDIR)/count.cpp
 	-rm $(SRCDIR)/empty.cpp
 	-rm $(SRCDIR)/bad.cpp
+	-rm $(SRCDIR)/vect.cpp
 	-rm $(SRCDIR)/Makefile
 	-rm $(SRCDIR)/gzzopt.hpp
 	-rm $(INCLUDEDIR)/gzzopt.hpp
