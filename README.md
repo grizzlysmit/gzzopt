@@ -104,7 +104,7 @@ All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 #include &lt;string&gt;
 
 
-int main(int argc, char\* argv[]){
+int main(int argc, char* argv[]){
     using namespace gzzopts;
     int cnt = 0;
     bool help = false;
@@ -162,7 +162,7 @@ enum class Opp  { none, add, sub, mult, div, pow };
 
 ...
 
-int main(int argc, char \*argv[]){
+int main(int argc, char *argv[]){
     using namespace gzzopts;
     double x, y;
     Opp opp = Opp::none;
