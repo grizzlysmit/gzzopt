@@ -105,6 +105,8 @@ install: all
 	$(INSTALL) -D example0 $(BINDIR)/example0
 	$(INSTALL) -D calc $(BINDIR)/calc
 	$(INSTALL) -D calc2 $(BINDIR)/calc2
+	$(INSTALL) -D calc2 $(BINDIR)/calc2_static
+	$(INSTALL) -D calc2 $(BINDIR)/calc2_dyn
 	$(INSTALL) -D count $(BINDIR)/count
 	$(INSTALL) -D empty $(BINDIR)/empty
 	$(INSTALL) -D example.cpp $(SRCDIR)/example.cpp
@@ -127,6 +129,8 @@ uninstall:
 	-rm $(BINDIR)/example0
 	-rm $(BINDIR)/calc
 	-rm $(BINDIR)/calc2
+	-rm $(BINDIR)/calc2_static
+	-rm $(BINDIR)/calc2_dyn
 	-rm $(BINDIR)/count
 	-rm $(BINDIR)/empty
 	-rm $(SRCDIR)/example.cpp
