@@ -14,7 +14,7 @@ CC=g++
 CFLAGS=-c -Wall -std=c++1y
 
 
-all: example example0 calc calc2 count empty libs bad vect
+all: example example0 calc calc2 count empty libs bad vect calc2_dyn calc2_static
 
 example: gzzopt.o example.o
 	$(CC) gzzopt.o example.o -o example
@@ -27,6 +27,12 @@ calc: gzzopt.o calc.o
 
 calc2: gzzopt.o calc2.o
 	$(CC) gzzopt.o calc2.o -o calc2
+
+calc2_static: gzzopt.hpp calc2.cpp
+	$(CC) $(CFLAGS) -static calc2.cpp -o calc2_static -lgzzopt
+
+calc2_dyn: gzzopt.hpp calc2.o
+	$(CC) calc2.o -o calc2_dyn -lgzzopt
 
 count: gzzopt.o count.o
 	$(CC) gzzopt.o count.o -o count
@@ -41,7 +47,7 @@ vect: gzzopt.o vect.o
 	$(CC) gzzopt.o vect.o -o vect
 
 gzzopt.o: gzzopt.cpp gzzopt.hpp
-	$(CC) $(CFLAGS) gzzopt.cpp
+	$(CC) -fPIC $(CFLAGS) gzzopt.cpp
 
 example.o: example.cpp
 	$(CC) $(CFLAGS) example.cpp
@@ -139,5 +145,5 @@ uninstall:
 .PHONY: install uninstall
 
 clean:
-	rm -rf *.o libgzzopt.so libgzzopt.a example example0 calc calc2 count empty bad vect 
+	rm -rf *.o libgzzopt.so libgzzopt.a example example0 calc calc2 count empty bad vect  calc2_dyn calc2_static
 
