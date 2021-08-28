@@ -21,11 +21,11 @@ Author: Francis Grizzly Smit
 
 
 
-### Introduction ###
+### Introduction
 
 The library is contained in the files *gzzopt.hpp* and *gzzopt.cpp*, (see below for how to create libgzzopt.a and libgzzopt.so) there are also 8 example programs *calc, calc2, count, bad, vect, empty, example0,* and *example*.
 
-### Example and Example0 ###
+### Example and Example0
 
 *example* is a complex example of just what complex a set of command lines you can achieve; *example0* shows how you can go wrong the gotcha is that *example0* tries to have the command line:
 <pre>
@@ -94,7 +94,7 @@ where:
 As you can see *calc* uses one argument spec *add|sub|mult|div|pow* where as *calc2* does the same thing using one command line per *add*, through to *pow*, as a result to avoid duplicate lines in the usage message; I used *p.set_compact(true);* in *calc2.cpp*.
 All of the programs correspond to a *.cpp* file see the *Makefile* for details.
 
-### Count ###
+### Count
 
 *count* shows a simple example of an incrementing integer option see *count.cpp*, this is done with an incrementing function, this is the best solution for this problem, I could do it by adding still more helper classes and special constructors and it gets progressively more ugly, so I bailed for something which will have fewer problems, and I think is an eloquent solution. see code below, or read *count.cpp*:
 
@@ -140,11 +140,11 @@ int main(int argc, char* argv[]){
    </code>
 </pre>
 
-###### NB #######
+###### NB ######
 Have to use *strvalue* to allow arbitary strings, should just been a variant of *positional* but my compiler goes to the **template** version instead. :P
 
 
-### A brief explanation of the format of a program using gxxopts ###
+### A brief explanation of the format of a program using gxxopts
 
 The format of a program is as follows in <code>main(int argc, char \*argv[])</code> or similar, define one or more Opt objects, the elements of the Opt object are OptionSpec objects, these can be entered directly or via the convenience functions *positionnal* and *literal* which produce OptionSpec objects with extra options turned on a *positional* is just a positional argument, and a *literal* is a literal string to expect, in addition OptionSpec has a initializer\_list constructor <code>OptionSpec(std::initializer\_list&lt;Opts\*&gt; opts)</code> which take a list of pointers to Opt objects (had to be pointers as Opts is an incomplete type at the time) so you can produce tree like structures. The constructor for Opt itself is a initializer\_list <code>Opts(std::initializer\_list&lt;OptionSpec&gt; lst)</code> so you can specify arbitrarily many elements.
 
